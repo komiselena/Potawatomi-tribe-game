@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "ivanmarz_pixel_art_super_agent_on_a_white_background_df6f2fc5-6fce-441e-94b8-f719944ccb00-Photoroom.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "ivanmarz_pixel_art_super_agent_on_a_white_background_df6f2fc5-6fce-441e-94b8-f719944ccb00-Photoroom 1.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "ivanmarz_pixel_art_super_agent_on_a_white_background_df6f2fc5-6fce-441e-94b8-f719944ccb00-Photoroom 2.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

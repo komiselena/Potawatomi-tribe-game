@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "ivanmarz_pixel_art_cowboy_on_a_white_background_7ecd0b54-119e-4cd1-b95e-8995e610c950-Photoroom 1.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "ivanmarz_pixel_art_cowboy_on_a_white_background_7ecd0b54-119e-4cd1-b95e-8995e610c950-Photoroom 2.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "ivanmarz_pixel_art_cowboy_on_a_white_background_7ecd0b54-119e-4cd1-b95e-8995e610c950-Photoroom 3.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

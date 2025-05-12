@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "ivanmarz_pixel_art_barn_on_a_white_background_8728261a-4529-4c62-a39e-a45a92c907d8-Photoroom 1.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "ivanmarz_pixel_art_barn_on_a_white_background_8728261a-4529-4c62-a39e-a45a92c907d8-Photoroom 2.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "ivanmarz_pixel_art_barn_on_a_white_background_8728261a-4529-4c62-a39e-a45a92c907d8-Photoroom 3.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

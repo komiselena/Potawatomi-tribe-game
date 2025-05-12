@@ -1,0 +1,42 @@
+//
+//  GameData.swift
+//  Potawatomi tribe game
+//
+//  Created by Mac on 12.05.2025.
+//
+
+import Foundation
+import SwiftUI
+
+class GameData: ObservableObject {
+    
+    @Published var coins: Int {
+        didSet {
+            UserDefaults.standard.set(coins, forKey: "coins")
+        }
+    }
+    
+    init() {
+        let savedCoins = UserDefaults.standard.integer(forKey: "coins")
+        if savedCoins == 0 {
+            self.coins = 5568
+            UserDefaults.standard.set(5568, forKey: "coins")
+        } else {
+            self.coins = savedCoins
+        }
+    }
+
+    
+    func addCoins(_ amount: Int){
+        coins += amount
+    }
+    
+    func spendCoins(_ amount: Int) -> Bool {
+        if coins >= amount {
+            coins -= amount
+            return true
+        } else {
+            return false
+        }
+    }
+}
