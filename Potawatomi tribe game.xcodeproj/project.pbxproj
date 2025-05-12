@@ -1,0 +1,561 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		04D39AEE2DD205B7006646FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04D39ACC2DD205B5006646FA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04D39AD32DD205B5006646FA;
+			remoteInfo = "Potawatomi tribe game";
+		};
+		04D39AF82DD205B7006646FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04D39ACC2DD205B5006646FA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04D39AD32DD205B5006646FA;
+			remoteInfo = "Potawatomi tribe game";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		04D39AD42DD205B5006646FA /* Potawatomi tribe game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Potawatomi tribe game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		04D39AED2DD205B7006646FA /* Potawatomi tribe gameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Potawatomi tribe gameTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		04D39AF72DD205B7006646FA /* Potawatomi tribe gameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Potawatomi tribe gameUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		04D39AD62DD205B5006646FA /* Potawatomi tribe game */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Potawatomi tribe game";
+			sourceTree = "<group>";
+		};
+		04D39AF02DD205B7006646FA /* Potawatomi tribe gameTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Potawatomi tribe gameTests";
+			sourceTree = "<group>";
+		};
+		04D39AFA2DD205B7006646FA /* Potawatomi tribe gameUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Potawatomi tribe gameUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		04D39AD12DD205B5006646FA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04D39AEA2DD205B7006646FA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04D39AF42DD205B7006646FA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		04D39ACB2DD205B5006646FA = {
+			isa = PBXGroup;
+			children = (
+				04D39AD62DD205B5006646FA /* Potawatomi tribe game */,
+				04D39AF02DD205B7006646FA /* Potawatomi tribe gameTests */,
+				04D39AFA2DD205B7006646FA /* Potawatomi tribe gameUITests */,
+				04D39AD52DD205B5006646FA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		04D39AD52DD205B5006646FA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				04D39AD42DD205B5006646FA /* Potawatomi tribe game.app */,
+				04D39AED2DD205B7006646FA /* Potawatomi tribe gameTests.xctest */,
+				04D39AF72DD205B7006646FA /* Potawatomi tribe gameUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		04D39AD32DD205B5006646FA /* Potawatomi tribe game */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04D39B012DD205B7006646FA /* Build configuration list for PBXNativeTarget "Potawatomi tribe game" */;
+			buildPhases = (
+				04D39AD02DD205B5006646FA /* Sources */,
+				04D39AD12DD205B5006646FA /* Frameworks */,
+				04D39AD22DD205B5006646FA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				04D39AD62DD205B5006646FA /* Potawatomi tribe game */,
+			);
+			name = "Potawatomi tribe game";
+			packageProductDependencies = (
+			);
+			productName = "Potawatomi tribe game";
+			productReference = 04D39AD42DD205B5006646FA /* Potawatomi tribe game.app */;
+			productType = "com.apple.product-type.application";
+		};
+		04D39AEC2DD205B7006646FA /* Potawatomi tribe gameTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04D39B042DD205B7006646FA /* Build configuration list for PBXNativeTarget "Potawatomi tribe gameTests" */;
+			buildPhases = (
+				04D39AE92DD205B7006646FA /* Sources */,
+				04D39AEA2DD205B7006646FA /* Frameworks */,
+				04D39AEB2DD205B7006646FA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				04D39AEF2DD205B7006646FA /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				04D39AF02DD205B7006646FA /* Potawatomi tribe gameTests */,
+			);
+			name = "Potawatomi tribe gameTests";
+			packageProductDependencies = (
+			);
+			productName = "Potawatomi tribe gameTests";
+			productReference = 04D39AED2DD205B7006646FA /* Potawatomi tribe gameTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		04D39AF62DD205B7006646FA /* Potawatomi tribe gameUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04D39B072DD205B7006646FA /* Build configuration list for PBXNativeTarget "Potawatomi tribe gameUITests" */;
+			buildPhases = (
+				04D39AF32DD205B7006646FA /* Sources */,
+				04D39AF42DD205B7006646FA /* Frameworks */,
+				04D39AF52DD205B7006646FA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				04D39AF92DD205B7006646FA /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				04D39AFA2DD205B7006646FA /* Potawatomi tribe gameUITests */,
+			);
+			name = "Potawatomi tribe gameUITests";
+			packageProductDependencies = (
+			);
+			productName = "Potawatomi tribe gameUITests";
+			productReference = 04D39AF72DD205B7006646FA /* Potawatomi tribe gameUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		04D39ACC2DD205B5006646FA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					04D39AD32DD205B5006646FA = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					04D39AEC2DD205B7006646FA = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 04D39AD32DD205B5006646FA;
+					};
+					04D39AF62DD205B7006646FA = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 04D39AD32DD205B5006646FA;
+					};
+				};
+			};
+			buildConfigurationList = 04D39ACF2DD205B5006646FA /* Build configuration list for PBXProject "Potawatomi tribe game" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 04D39ACB2DD205B5006646FA;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 04D39AD52DD205B5006646FA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				04D39AD32DD205B5006646FA /* Potawatomi tribe game */,
+				04D39AEC2DD205B7006646FA /* Potawatomi tribe gameTests */,
+				04D39AF62DD205B7006646FA /* Potawatomi tribe gameUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		04D39AD22DD205B5006646FA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04D39AEB2DD205B7006646FA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04D39AF52DD205B7006646FA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		04D39AD02DD205B5006646FA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04D39AE92DD205B7006646FA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04D39AF32DD205B7006646FA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		04D39AEF2DD205B7006646FA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04D39AD32DD205B5006646FA /* Potawatomi tribe game */;
+			targetProxy = 04D39AEE2DD205B7006646FA /* PBXContainerItemProxy */;
+		};
+		04D39AF92DD205B7006646FA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04D39AD32DD205B5006646FA /* Potawatomi tribe game */;
+			targetProxy = 04D39AF82DD205B7006646FA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		04D39AFF2DD205B7006646FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		04D39B002DD205B7006646FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		04D39B022DD205B7006646FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZR4XR5VH35;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Potawatomi-tribe-game";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		04D39B032DD205B7006646FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZR4XR5VH35;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Potawatomi-tribe-game";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		04D39B052DD205B7006646FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZR4XR5VH35;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Potawatomi-tribe-gameTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Potawatomi tribe game.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Potawatomi tribe game";
+			};
+			name = Debug;
+		};
+		04D39B062DD205B7006646FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZR4XR5VH35;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Potawatomi-tribe-gameTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Potawatomi tribe game.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Potawatomi tribe game";
+			};
+			name = Release;
+		};
+		04D39B082DD205B7006646FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZR4XR5VH35;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Potawatomi-tribe-gameUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Potawatomi tribe game";
+			};
+			name = Debug;
+		};
+		04D39B092DD205B7006646FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZR4XR5VH35;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Potawatomi-tribe-gameUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Potawatomi tribe game";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		04D39ACF2DD205B5006646FA /* Build configuration list for PBXProject "Potawatomi tribe game" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04D39AFF2DD205B7006646FA /* Debug */,
+				04D39B002DD205B7006646FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04D39B012DD205B7006646FA /* Build configuration list for PBXNativeTarget "Potawatomi tribe game" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04D39B022DD205B7006646FA /* Debug */,
+				04D39B032DD205B7006646FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04D39B042DD205B7006646FA /* Build configuration list for PBXNativeTarget "Potawatomi tribe gameTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04D39B052DD205B7006646FA /* Debug */,
+				04D39B062DD205B7006646FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04D39B072DD205B7006646FA /* Build configuration list for PBXNativeTarget "Potawatomi tribe gameUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04D39B082DD205B7006646FA /* Debug */,
+				04D39B092DD205B7006646FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 04D39ACC2DD205B5006646FA /* Project object */;
+}
