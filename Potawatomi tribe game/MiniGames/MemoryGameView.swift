@@ -15,7 +15,8 @@ struct MemoryGameView: View {
     @State private var timeLeft = 45
     @State private var showReward = false
     @State private var timer: Timer?
-    
+    @ObservedObject var gameViewModel: GameViewModel
+
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -30,7 +31,7 @@ struct MemoryGameView: View {
     // MARK: - Subviews
     
     private var backgroundView: some View {
-        Image("BG1")
+        Image("\(gameViewModel.backgroundImage)")
             .resizable()
             .scaledToFill()
             .ignoresSafeArea()

@@ -10,12 +10,13 @@ import SwiftUI
 struct MainMenuView: View {
     @State private var showMiniGamesModal: Bool = false
     @ObservedObject var gameData = GameData()
+    @ObservedObject var gameViewModel = GameViewModel()
 
     var body: some View {
         NavigationView{
             GeometryReader{ g in
                 ZStack{
-                    Image("BG1")
+                    Image("\(gameViewModel.backgroundImage)")
                         .resizable()
                         .ignoresSafeArea()
                     VStack{
@@ -35,7 +36,7 @@ struct MainMenuView: View {
                                     .resizable()
                                     .frame(width: g.size.height * 0.07, height: g.size.height * 0.07)
 //                                Spacer()
-                                Text("0")
+                                Text("\(gameData.coins)")
                                     .foregroundStyle(.white)
                                     .font(.title)
 //                                    .padding(.trailing)
@@ -61,7 +62,7 @@ struct MainMenuView: View {
 
                         }
                         NavigationLink {
-                            LevelView()
+                            LevelView(gameViewModel: gameViewModel)
 
                         } label: {
                             ZStack{
@@ -78,7 +79,7 @@ struct MainMenuView: View {
                         
                         HStack{
                             NavigationLink {
-    //                            GameView()
+                                ShopView(gameViewModel: gameViewModel, gameData: gameData)
                             } label: {
                                 ZStack{
                                     Rectangle()
@@ -91,6 +92,7 @@ struct MainMenuView: View {
                                 }
                             }
                             NavigationLink {
+                                AchievementsView(gameViewModel: gameViewModel, gameData: gameData)
     //                            GameView()
                             } label: {
                                 ZStack{
@@ -107,6 +109,7 @@ struct MainMenuView: View {
                         .frame(width: g.size.width * 0.9, height: g.size.height * 0.08)
                         
                         NavigationLink {
+                            SettingsView(gameViewModel: gameViewModel)
 //                            GameView()
                         } label: {
                             ZStack{
@@ -130,7 +133,7 @@ struct MainMenuView: View {
                                 Color.black.opacity(0.6)
                                     .ignoresSafeArea()
                                 VStack{
-                                    MiniGamesView(gameData: gameData)
+                                    MiniGamesView(gameData: gameData, gameViewModel: gameViewModel)
                                         .padding()
                                     HStack{
                                         Spacer()

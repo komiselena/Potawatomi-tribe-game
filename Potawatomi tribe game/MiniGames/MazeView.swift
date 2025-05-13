@@ -16,11 +16,12 @@ struct MazeView: View {
     @State private var timeLeft = 90
     @State private var timer: Timer?
     @State private var showWin = false
+    @ObservedObject var gameViewModel: GameViewModel
 
     var body: some View {
         GeometryReader { g in
             ZStack{
-                Image("BG1")
+                Image("\(gameViewModel.backgroundImage)")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()

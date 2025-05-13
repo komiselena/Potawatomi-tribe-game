@@ -9,13 +9,14 @@ import SwiftUI
 
 struct MiniGamesView: View {
     @ObservedObject var gameData: GameData
+    @ObservedObject var gameViewModel: GameViewModel
 
     var body: some View {
         GeometryReader { g in
             VStack(alignment: .center, spacing: 20){
                 Spacer()
                 NavigationLink {
-                    GuessNumberView(gameData: gameData)
+                    GuessNumberView(gameData: gameData, gameViewModel: gameViewModel)
                 } label: {
                     ZStack{
                         Rectangle()
@@ -36,7 +37,7 @@ struct MiniGamesView: View {
                     }
                 }
                 NavigationLink {
-                    MemoryGameView(gameData: gameData)
+                    MemoryGameView(gameData: gameData, gameViewModel: gameViewModel)
                 } label: {
                     ZStack{
                         Rectangle()
@@ -57,7 +58,7 @@ struct MiniGamesView: View {
                     }
                 }
                 NavigationLink {
-                    MemorySequnceGameView(gameData: gameData)
+                    MemorySequnceGameView(gameData: gameData, gameViewModel: gameViewModel)
                 } label: {
                     ZStack{
                         Rectangle()
@@ -78,7 +79,7 @@ struct MiniGamesView: View {
                     }
                 }
                 NavigationLink {
-                    MazeView(gameData: gameData)
+                    MazeView(gameData: gameData, gameViewModel: gameViewModel)
                 } label: {
                     ZStack{
                         Rectangle()

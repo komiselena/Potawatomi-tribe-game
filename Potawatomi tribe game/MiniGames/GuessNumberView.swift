@@ -11,11 +11,12 @@ struct GuessNumberView: View {
     @ObservedObject var gameData: GameData
     @Environment(\.dismiss) private var dismiss
     @StateObject private var game = GuessTheNumberGame()
+    @ObservedObject var gameViewModel: GameViewModel
     
     var body: some View {
         GeometryReader { g in
             ZStack {
-                Image("BG1")
+                Image("\(gameViewModel.backgroundImage)")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()

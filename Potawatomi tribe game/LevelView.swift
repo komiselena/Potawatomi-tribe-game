@@ -12,12 +12,13 @@ struct LevelView: View {
     @Environment(\.dismiss) var dismiss
     private let columns = Array(repeating: GridItem(.flexible()), count: 3)
     private let numberOfLevels = 10
-    
+    @ObservedObject var gameViewModel: GameViewModel
+
     var body: some View {
         NavigationView {
             GeometryReader { g in
                 ZStack {
-                    Image("BG1")
+                    Image("\(gameViewModel.backgroundImage)")
                         .resizable()
                         .ignoresSafeArea()
                     
@@ -59,6 +60,7 @@ struct LevelView: View {
                                 NavigationLink {
                                     SpriteKitContainer()
                                         .edgesIgnoringSafeArea(.all)
+                                        .environmentObject(gameViewModel)
                                         .navigationBarBackButtonHidden()
                                         .overlay(
                                             ZStack {
@@ -118,20 +120,3 @@ struct LevelView: View {
 }
 
 
-struct SpriteKitContainer: UIViewRepresentable {
-    func makeUIView(context: Context) -> SKView {
-        let view = SKView()
-        
-        // Создаем сцену с правильным размером
-        let scene = GameScene(size: CGSize(
-            width: UIScreen.main.bounds.width,
-            height: UIScreen.main.bounds.height
-        ))
-        scene.scaleMode = .aspectFill
-        
-        view.presentScene(scene)
-        return view
-    }
-    
-    func updateUIView(_ uiView: SKView, context: Context) {}
-}

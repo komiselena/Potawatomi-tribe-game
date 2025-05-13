@@ -14,6 +14,7 @@ struct Level1View: View {
     var body: some View {
         GameView(level: 1)
             .edgesIgnoringSafeArea(.all)
+            
             .navigationBarBackButtonHidden()
     }
 }

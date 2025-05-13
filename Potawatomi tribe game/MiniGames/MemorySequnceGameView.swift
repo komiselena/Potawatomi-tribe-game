@@ -12,11 +12,12 @@ struct MemorySequnceGameView: View {
     @StateObject private var viewModel = MemoryGameViewModel()
     @ObservedObject var gameData: GameData
     @Environment(\.dismiss) private var dismiss
-    
+    @ObservedObject var gameViewModel: GameViewModel
+
     var body: some View {
         GeometryReader { g in
             ZStack{
-                Image("BG1")
+                Image("\(gameViewModel.backgroundImage)")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
@@ -170,5 +171,5 @@ struct MemorySequnceGameView: View {
 
 
 #Preview {
-    MemorySequnceGameView(gameData: GameData())
+    MemorySequnceGameView(gameData: GameData(), gameViewModel: GameViewModel())
 }
