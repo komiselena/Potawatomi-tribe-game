@@ -47,8 +47,7 @@ struct ShopView: View {
                             Spacer()
                             Text("SHOP")
                                 .foregroundStyle(.white)
-                                .fontWeight(.bold)
-                                .font(.title)
+                        .font(.title.weight(.heavy)) // Uses iOS's default title size + heavy weight
                             Spacer()
                             
                             Image(systemName: "arrow.left")
@@ -70,11 +69,10 @@ struct ShopView: View {
 //                                Spacer()
                             Text("\(gameData.coins)")
                                 .foregroundStyle(.white)
-                                .font(.title)
-//                                    .padding(.trailing)
+                                .font(.title2)
                             Spacer()
                         }
-                        .frame(width: g.size.width * 0.29, height: g.size.height * 0.08)
+                        .frame(width: g.size.width * 0.29, height: g.size.height * 0.1)
 
                     }
                     .padding()
@@ -90,8 +88,7 @@ struct ShopView: View {
                                     .opacity(selectedTab == .backgrounds ? 1.0 : 0.6)
                                 Text("BACKGROUNDS")
                                     .foregroundStyle(.black)
-                                    .fontWeight(.bold)
-                                    .font(.title3)
+                        .font(.title3.weight(.bold)) // Uses iOS's default title size + heavy weight
                             }
                         }
 
@@ -105,8 +102,7 @@ struct ShopView: View {
                                     .opacity(selectedTab == .skins ? 1.0 : 0.6)
                                 Text("SKINS")
                                     .foregroundStyle(.black)
-                                    .fontWeight(.bold)
-                                    .font(.title3)
+                        .font(.title3.weight(.bold)) // Uses iOS's default title size + heavy weight
                             }
                         }
                         
@@ -123,14 +119,13 @@ struct ShopView: View {
                                     Image("BG1")
                                         .resizable()
                                         .scaledToFill()
-                                        .frame(width: g.size.width * 0.2, height: g.size.width * 0.2)
+                                        .frame(width: g.size.width * 0.18, height: g.size.width * 0.18)
                                         .clipped()
                                     
                                     VStack(alignment:.leading){
                                         Text("NIGHT CITY")
                                             .foregroundStyle(.white)
-                                            .font(.headline)
-                                            .fontWeight(.bold)
+                                        .font(.headline.weight(.bold)) // Uses iOS's default title size + heavy weight
                                         Text(currentBGStatus(for: 1))
                                             .foregroundStyle(.white)
                                             .font(.callout)
@@ -142,9 +137,8 @@ struct ShopView: View {
                                     } label: {
                                         Text(currentBGButtonImage(for: 1))
                                             .foregroundStyle(.black)
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .padding()
+                                        .font(.caption.weight(.bold)) // Uses iOS's default title size + heavy weight
+                                            .padding(10)
                                             .background {
                                                 Rectangle()
                                                     .foregroundStyle(.white)
@@ -166,14 +160,13 @@ struct ShopView: View {
                                     Image("BG2")
                                         .resizable()
                                         .scaledToFill()
-                                        .frame(width: g.size.width * 0.2, height: g.size.width * 0.2)
+                                        .frame(width: g.size.width * 0.18, height: g.size.width * 0.18)
                                         .clipped()
                                     
                                     VStack(alignment:.leading){
                                         Text("FIELDS")
                                             .foregroundStyle(.white)
-                                            .font(.headline)
-                                            .fontWeight(.bold)
+                                        .font(.headline.weight(.bold)) // Uses iOS's default title size + heavy weight
                                         Text(currentBGStatus(for: 2))
                                             .foregroundStyle(.white)
                                             .font(.callout)
@@ -185,9 +178,8 @@ struct ShopView: View {
                                     } label: {
                                         Text(currentBGButtonImage(for: 2))
                                             .foregroundStyle(.black)
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .padding()
+                                        .font(.caption.weight(.bold)) // Uses iOS's default title size + heavy weight
+                                            .padding(10)
                                             .background {
                                                 Rectangle()
                                                     .foregroundStyle(.white)
@@ -210,14 +202,13 @@ struct ShopView: View {
                                     Image("BG3")
                                         .resizable()
                                         .scaledToFill()
-                                        .frame(width: g.size.width * 0.2, height: g.size.width * 0.2)
+                                        .frame(width: g.size.width * 0.18, height: g.size.width * 0.18)
                                         .clipped()
                                     
                                     VStack(alignment:.leading){
                                         Text("ISLAND")
                                             .foregroundStyle(.white)
-                                            .font(.headline)
-                                            .fontWeight(.bold)
+                                        .font(.headline.weight(.bold)) // Uses iOS's default title size + heavy weight
                                         Text(currentBGStatus(for: 3))
                                             .foregroundStyle(.white)
                                             .font(.callout)
@@ -229,9 +220,8 @@ struct ShopView: View {
                                     } label: {
                                         Text(currentBGButtonImage(for: 3))
                                             .foregroundStyle(.black)
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .padding()
+                                        .font(.caption.weight(.bold)) // Uses iOS's default title size + heavy weight
+                                            .padding(10)
                                             .background {
                                                 Rectangle()
                                                     .foregroundStyle(.white)
@@ -254,14 +244,13 @@ struct ShopView: View {
                                     Image("BG4")
                                         .resizable()
                                         .scaledToFill()
-                                        .frame(width: g.size.width * 0.2, height: g.size.width * 0.2)
+                                        .frame(width: g.size.width * 0.18, height: g.size.width * 0.18)
                                         .clipped()
                                     
                                     VStack(alignment:.leading){
                                         Text("SPACE")
                                             .foregroundStyle(.white)
-                                            .font(.headline)
-                                            .fontWeight(.bold)
+                                        .font(.headline.weight(.bold)) // Uses iOS's default title size + heavy weight
                                         Text(currentBGStatus(for: 4))
                                             .foregroundStyle(.white)
                                             .font(.callout)
@@ -273,9 +262,8 @@ struct ShopView: View {
                                     } label: {
                                         Text(currentBGButtonImage(for: 4))
                                             .foregroundStyle(.black)
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .padding()
+                                        .font(.caption.weight(.bold)) // Uses iOS's default title size + heavy weight
+                                            .padding(10)
                                             .background {
                                                 Rectangle()
                                                     .foregroundStyle(.white)
@@ -301,17 +289,22 @@ struct ShopView: View {
                                     .foregroundStyle(.red)
                                     .frame(width: g.size.width * 0.9, height: g.size.height * 0.14)
                                 HStack{
-                                    Image("skin1")
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: g.size.width * 0.2, height: g.size.width * 0.2)
-                                        .clipped()
-                                    
+                                    ZStack{
+                                        Rectangle()
+                                            .foregroundStyle(.white)
+                                            .frame(width: g.size.width * 0.18, height: g.size.width * 0.18)
+
+                                        Image("skin1")
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: g.size.width * 0.18, height: g.size.width * 0.18)
+                                            .clipped()
+                                    }
+
                                     VStack(alignment:.leading){
                                         Text("COWBOY")
                                             .foregroundStyle(.white)
-                                            .font(.headline)
-                                            .fontWeight(.bold)
+                                        .font(.headline.weight(.bold)) // Uses iOS's default title size + heavy weight
                                         Text(currentBGStatus(for: 1))
                                             .foregroundStyle(.white)
                                             .font(.callout)
@@ -323,9 +316,8 @@ struct ShopView: View {
                                     } label: {
                                         Text(currentSkinButtonImage(for: 1))
                                             .foregroundStyle(.black)
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .padding()
+                                        .font(.caption.weight(.bold)) // Uses iOS's default title size + heavy weight
+                                            .padding(10)
                                             .background {
                                                 Rectangle()
                                                     .foregroundStyle(.white)
@@ -344,17 +336,22 @@ struct ShopView: View {
                                     .foregroundStyle(.red)
                                     .frame(width: g.size.width * 0.9, height: g.size.height * 0.14)
                                 HStack{
-                                    Image("skin2")
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: g.size.width * 0.2, height: g.size.width * 0.2)
-                                        .clipped()
-                                    
+                                    ZStack{
+                                        Rectangle()
+                                            .foregroundStyle(.white)
+                                            .frame(width: g.size.width * 0.18, height: g.size.width * 0.18)
+
+                                        Image("skin2")
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: g.size.width * 0.18, height: g.size.width * 0.18)
+                                            .clipped()
+                                    }
+
                                     VStack(alignment:.leading){
                                         Text("COWGIRL")
                                             .foregroundStyle(.white)
-                                            .font(.headline)
-                                            .fontWeight(.bold)
+                                        .font(.headline.weight(.bold)) // Uses iOS's default title size + heavy weight
                                         Text(currentBGStatus(for: 2))
                                             .foregroundStyle(.white)
                                             .font(.callout)
@@ -366,9 +363,8 @@ struct ShopView: View {
                                     } label: {
                                         Text(currentSkinButtonImage(for: 2))
                                             .foregroundStyle(.black)
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .padding()
+                                        .font(.caption.weight(.bold)) // Uses iOS's default title size + heavy weight
+                                            .padding(10)
                                             .background {
                                                 Rectangle()
                                                     .foregroundStyle(.white)
@@ -388,17 +384,22 @@ struct ShopView: View {
                                     .foregroundStyle(.red)
                                     .frame(width: g.size.width * 0.9, height: g.size.height * 0.14)
                                 HStack{
-                                    Image("skin3")
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: g.size.width * 0.2, height: g.size.width * 0.2)
-                                        .clipped()
-                                    
+                                    ZStack{
+                                        Rectangle()
+                                            .foregroundStyle(.white)
+                                            .frame(width: g.size.width * 0.18, height: g.size.width * 0.18)
+
+                                        Image("skin3")
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: g.size.width * 0.18, height: g.size.width * 0.18)
+                                            .clipped()
+                                    }
+
                                     VStack(alignment:.leading){
                                         Text("AGENT")
                                             .foregroundStyle(.white)
-                                            .font(.headline)
-                                            .fontWeight(.bold)
+                                        .font(.headline.weight(.bold)) // Uses iOS's default title size + heavy weight
                                         Text(currentBGStatus(for: 3))
                                             .foregroundStyle(.white)
                                             .font(.callout)
@@ -410,9 +411,8 @@ struct ShopView: View {
                                     } label: {
                                         Text(currentSkinButtonImage(for: 3))
                                             .foregroundStyle(.black)
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .padding()
+                                        .font(.caption.weight(.bold)) // Uses iOS's default title size + heavy weight
+                                            .padding(10)
                                             .background {
                                                 Rectangle()
                                                     .foregroundStyle(.white)
@@ -432,17 +432,22 @@ struct ShopView: View {
                                     .foregroundStyle(.red)
                                     .frame(width: g.size.width * 0.9, height: g.size.height * 0.14)
                                 HStack{
-                                    Image("skin4")
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: g.size.width * 0.2, height: g.size.width * 0.2)
-                                        .clipped()
+                                    ZStack{
+                                        Rectangle()
+                                            .foregroundStyle(.white)
+                                            .frame(width: g.size.width * 0.18, height: g.size.width * 0.18)
+
+                                        Image("skin4")
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: g.size.width * 0.18, height: g.size.width * 0.18)
+                                            .clipped()
+                                    }
                                     
                                     VStack(alignment:.leading){
                                         Text("ROBOT")
                                             .foregroundStyle(.white)
-                                            .font(.headline)
-                                            .fontWeight(.bold)
+                                        .font(.headline.weight(.bold)) // Uses iOS's default title size + heavy weight
                                         Text(currentBGStatus(for: 4))
                                             .foregroundStyle(.white)
                                             .font(.callout)
@@ -454,9 +459,8 @@ struct ShopView: View {
                                     } label: {
                                         Text(currentSkinButtonImage(for: 4))
                                             .foregroundStyle(.black)
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .padding()
+                                        .font(.caption.weight(.bold)) // Uses iOS's default title size + heavy weight
+                                            .padding(10)
                                             .background {
                                                 Rectangle()
                                                     .foregroundStyle(.white)

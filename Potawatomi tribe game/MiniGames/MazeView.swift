@@ -10,13 +10,24 @@ import SpriteKit
 
 struct MazeView: View {
     @Environment(\.dismiss) private var dismiss
+    @StateObject private var scene: MazeGameScene
 
-    @State private var scene = MazeGameScene(size: CGSize(width: 196, height: 196))
+//    @State private var scene = MazeGameScene(size: CGSize(width: 196, height: 196))
     @ObservedObject var gameData: GameData
     @State private var timeLeft = 90
     @State private var timer: Timer?
     @State private var showWin = false
     @ObservedObject var gameViewModel: GameViewModel
+
+    init(gameData: GameData, gameViewModel: GameViewModel) {
+        self.gameData = gameData
+        self.gameViewModel = gameViewModel
+        let scene = MazeGameScene(size: CGSize(width: 196, height: 196))
+        scene.onGameWon = {
+            scene.isWon = true
+        }
+        self._scene = StateObject(wrappedValue: scene)
+    }
 
     var body: some View {
         GeometryReader { g in
@@ -47,8 +58,7 @@ struct MazeView: View {
                             Spacer()
                             Text("MAZE CHALLENGE")
                                 .foregroundStyle(.white)
-                                .fontWeight(.bold)
-                                .font(.title)
+                        .font(.title.weight(.heavy)) // Uses iOS's default title size + heavy weight
                             Spacer()
                             
                             Image(systemName: "arrow.left")
@@ -105,9 +115,29 @@ struct MazeView: View {
                     
                 }
                 .frame(width: g.size.width, height: g.size.height * 0.9)
+                
 
             }
             .frame(width: g.size.width, height: g.size.height)
+            .overlay{
+                if scene.isWon {
+                ZStack{
+                    Color.black
+                        .opacity(0.3)
+                        .ignoresSafeArea()
+                    
+                    Image("Button-4")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: g.size.width * 0.9, height: g.size.height * 0.4)
+                        .onTapGesture {
+                            dismiss()
+                        }
+
+                }
+            }
+        }
+
 
             .navigationBarBackButtonHidden()
 

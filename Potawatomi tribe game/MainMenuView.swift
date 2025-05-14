@@ -37,11 +37,10 @@ struct MainMenuView: View {
                                     //                                Spacer()
                                     Text("\(gameData.coins)")
                                         .foregroundStyle(.white)
-                                        .font(.title)
-                                    //                                    .padding(.trailing)
+                                        .font(.title2)
                                     Spacer()
                                 }
-                                .frame(width: g.size.width * 0.29, height: g.size.height * 0.08)
+                                .frame(width: g.size.width * 0.29, height: g.size.height * 0.1)
                                 
                             }
                             

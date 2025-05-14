@@ -39,8 +39,7 @@ struct SettingsView: View {
                             Spacer()
                             Text("ACHIEVEMENTS")
                                 .foregroundStyle(.white)
-                                .fontWeight(.bold)
-                                .font(.title)
+                                .font(.title.weight(.heavy)) // Uses iOS's default title size + heavy weight
                             Spacer()
                             
                             Image(systemName: "arrow.left")
@@ -59,24 +58,21 @@ struct SettingsView: View {
                             HStack{
                                 Text("MUSIC")
                                     .foregroundStyle(.black)
-                                    .font(.title3)
-                                    .fontWeight(.bold)
+                                    .font(.title3.weight(.heavy)) // Uses iOS's default title size + heavy weight
                                     .padding()
                                 Spacer()
                                 Button {
-                                    if musicManager.audioPlayerVolume == 1.0 {
-                                        musicManager.audioPlayerVolume = 0.0
+                                    if !musicManager.paused {
+                                        MusicManager.shared.pauseMusic()
                                     }else{
-                                        musicManager.audioPlayerVolume = 1.0
+                                        MusicManager.shared.resumeMusic()
                                     }
                                 } label: {
-                                    Text(musicManager.audioPlayerVolume == 1.0 ? "ON" : "OFF")
+                                    Text(!musicManager.paused ? "ON" : "OFF")
                                         .foregroundStyle(.black)
-                                        .opacity(musicManager.audioPlayerVolume == 1.0 ? 1.0 : 0.5)
+                                        .opacity(!musicManager.paused ? 1.0 : 0.5)
 
-                                        .font(.title)
-
-                                        .fontWeight(.bold)
+                                        .font(.title.weight(.heavy)) // Uses iOS's default title size + heavy weight
                                         .padding()
 
                                 }
@@ -90,8 +86,7 @@ struct SettingsView: View {
                             HStack{
                                 Text("SOUNDS")
                                     .foregroundStyle(.black)
-                                    .font(.title3)
-                                    .fontWeight(.bold)
+                                    .font(.title3.weight(.heavy)) // Uses iOS's default title size + heavy weight
                                     .padding()
                                 Spacer()
                                 Button {
@@ -104,8 +99,7 @@ struct SettingsView: View {
                                     Text(musicManager.soundsOn ? "ON" : "OFF")
                                         .foregroundStyle(.black)
                                         .opacity(musicManager.soundsOn ? 1.0 : 0.5)
-                                        .font(.title)
-                                        .fontWeight(.bold)
+                                        .font(.title.weight(.heavy)) // Uses iOS's default title size + heavy weight
                                         .padding()
 
                                 }
@@ -119,8 +113,7 @@ struct SettingsView: View {
                             HStack{
                                 Text("VIBRO")
                                     .foregroundStyle(.black)
-                                    .font(.title3)
-                                    .fontWeight(.bold)
+                                    .font(.title3.weight(.heavy)) // Uses iOS's default title size + heavy weight
                                     .padding()
                                 Spacer()
                                 Button {
@@ -128,9 +121,8 @@ struct SettingsView: View {
                                 } label: {
                                     Text("OFF")
                                         .foregroundStyle(.black)
-                                        .font(.title)
                                         .opacity(0.5)
-                                        .fontWeight(.bold)
+                                        .font(.title3.weight(.heavy)) // Uses iOS's default title size + heavy weight
                                         .padding()
 
                                 }
@@ -148,8 +140,7 @@ struct SettingsView: View {
                                 
                                 Text("SAVE CHANGES")
                                     .foregroundStyle(.white)
-                                    .font(.title)
-                                    .fontWeight(.bold)
+                                    .font(.title.weight(.heavy)) // Uses iOS's default title size + heavy weight
                             }
                         }
                         

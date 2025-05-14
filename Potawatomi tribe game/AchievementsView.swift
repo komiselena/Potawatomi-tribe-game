@@ -40,8 +40,7 @@ struct AchievementsView: View {
                             Spacer()
                             Text("ACHIEVEMENTS")
                                 .foregroundStyle(.white)
-                                .fontWeight(.bold)
-                                .font(.title)
+                                .font(.title.weight(.bold)) // Uses iOS's default title size + heavy weight
                             Spacer()
                             
                             Image(systemName: "arrow.left")
@@ -69,8 +68,7 @@ struct AchievementsView: View {
                                 VStack(alignment:.leading){
                                     Text("SHEPHERD")
                                         .foregroundStyle(.white)
-                                        .font(.headline)
-                                        .fontWeight(.bold)
+                                        .font(.headline.weight(.bold)) // Uses iOS's default title size + heavy weight
                                     Text("Complete the first level")
                                         .foregroundStyle(.white)
                                         .font(.callout)
@@ -82,8 +80,7 @@ struct AchievementsView: View {
                                         } label: {
                                             Text("CLAIM 10")
                                                 .foregroundStyle(.black)
-                                                .fontWeight(.bold)
-                                                .font(.caption)
+                                                .font(.caption.weight(.bold)) // Uses iOS's default title size + heavy weight
                                                 .padding(7)
                                                 .background {
                                                     Rectangle()
@@ -117,8 +114,7 @@ struct AchievementsView: View {
                                 VStack(alignment:.leading){
                                     Text("RIDER")
                                         .foregroundStyle(.white)
-                                        .font(.headline)
-                                        .fontWeight(.bold)
+                                        .font(.headline.weight(.bold)) // Uses iOS's default title size + heavy weight
                                     Text("Complete 5 level")
                                         .foregroundStyle(.white)
                                         .font(.callout)
@@ -129,8 +125,7 @@ struct AchievementsView: View {
                                         } label: {
                                             Text("CLAIM 10")
                                                 .foregroundStyle(.black)
-                                                .fontWeight(.bold)
-                                                .font(.caption)
+                                                .font(.caption.weight(.bold)) // Uses iOS's default title size + heavy weight
                                                 .padding(7)
                                                 .background {
                                                     Rectangle()
@@ -165,8 +160,8 @@ struct AchievementsView: View {
                                 VStack(alignment:.leading){
                                     Text("COWBOY")
                                         .foregroundStyle(.white)
-                                        .font(.headline)
-                                        .fontWeight(.bold)
+                                                                                .font(.headline.weight(.bold)) // Uses iOS's default title size + heavy weight
+
                                     Text("Complete 7 level")
                                         .foregroundStyle(.white)
                                         .font(.callout)
@@ -177,8 +172,7 @@ struct AchievementsView: View {
                                         } label: {
                                             Text("CLAIM 10")
                                                 .foregroundStyle(.black)
-                                                .fontWeight(.bold)
-                                                .font(.caption)
+                                        .font(.caption.weight(.bold)) // Uses iOS's default title size + heavy weight
                                                 .padding(7)
                                                 .background {
                                                     Rectangle()
@@ -213,8 +207,8 @@ struct AchievementsView: View {
                                 VStack(alignment:.leading){
                                     Text("FARMER")
                                         .foregroundStyle(.white)
-                                        .font(.headline)
-                                        .fontWeight(.bold)
+                                                                                .font(.headline.weight(.bold)) // Uses iOS's default title size + heavy weight
+
                                     Text("Accumulate 1000 hourseshoes")
                                         .foregroundStyle(.white)
                                         .font(.callout)
@@ -225,8 +219,7 @@ struct AchievementsView: View {
                                         } label: {
                                             Text("CLAIM 10")
                                                 .foregroundStyle(.black)
-                                                .fontWeight(.bold)
-                                                .font(.caption)
+                                        .font(.caption.weight(.bold)) // Uses iOS's default title size + heavy weight
                                                 .padding(7)
                                                 .background {
                                                     Rectangle()
@@ -261,8 +254,8 @@ struct AchievementsView: View {
                                 VStack(alignment:.leading){
                                     Text("SHERIFF")
                                         .foregroundStyle(.white)
-                                        .font(.headline)
-                                        .fontWeight(.bold)
+                                                                                .font(.headline.weight(.bold)) // Uses iOS's default title size + heavy weight
+
                                     Text("Complete all levels")
                                         .foregroundStyle(.white)
                                         .font(.callout)
@@ -273,8 +266,7 @@ struct AchievementsView: View {
                                         } label: {
                                             Text("CLAIM 10")
                                                 .foregroundStyle(.black)
-                                                .fontWeight(.bold)
-                                                .font(.caption)
+                                        .font(.caption.weight(.bold)) // Uses iOS's default title size + heavy weight
                                                 .padding(7)
                                                 .background {
                                                     Rectangle()

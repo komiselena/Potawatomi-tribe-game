@@ -25,8 +25,7 @@ struct MiniGamesView: View {
                         HStack{
                             Text("GUESS THE NUMBER")
                                 .foregroundStyle(.white)
-                                .fontWeight(.bold)
-                                .font(.title2)
+                                .font(.title2.weight(.bold)) // Uses iOS's default title size + heavy weight
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .font(.title2)
@@ -46,8 +45,7 @@ struct MiniGamesView: View {
                         HStack{
                             Text("CARD MATCH")
                                 .foregroundStyle(.white)
-                                .fontWeight(.bold)
-                                .font(.title2)
+                                .font(.title2.weight(.bold)) // Uses iOS's default title size + heavy weight
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .font(.title2)
@@ -67,8 +65,7 @@ struct MiniGamesView: View {
                         HStack{
                             Text("SIMON SAYS")
                                 .foregroundStyle(.white)
-                                .fontWeight(.bold)
-                                .font(.title2)
+                                .font(.title2.weight(.bold)) // Uses iOS's default title size + heavy weight
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .font(.title2)
@@ -88,8 +85,7 @@ struct MiniGamesView: View {
                         HStack{
                             Text("MAZE CHALLENGE")
                                 .foregroundStyle(.white)
-                                .fontWeight(.bold)
-                                .font(.title2)
+                                .font(.title2.weight(.bold)) // Uses iOS's default title size + heavy weight
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .font(.title2)

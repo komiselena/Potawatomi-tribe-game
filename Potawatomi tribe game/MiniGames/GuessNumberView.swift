@@ -41,8 +41,7 @@ struct GuessNumberView: View {
                             Spacer()
                             Text("GUESS THE NUMBER")
                                 .foregroundStyle(.white)
-                                .fontWeight(.bold)
-                                .font(.title)
+                        .font(.title.weight(.heavy)) // Uses iOS's default title size + heavy weight
                             Spacer()
                             
                             Image(systemName: "arrow.left")
@@ -75,15 +74,21 @@ struct GuessNumberView: View {
                         .frame(width: g.size.width * 0.9, height: g.size.width * 0.25)
 
                         // Подсказка
-                        if !game.hint.isEmpty {
-                            Text(game.hint)
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .padding()
-                                .animation(.easeInOut, value: game.hint)
+                        Group{
+                            if !game.hint.isEmpty {
+                                Text(game.hint)
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .animation(.easeInOut, value: game.hint)
+                                
+                            } else{
+                                Text("")
+                                
+                            }
                         }
-//                            .frame(width: g.size.width * 0.9, height: g.size.width * 0.28)
+                        .frame(width: g.size.width * 0.9, height: g.size.height * 0.05)
 
                         
                         Spacer()
@@ -101,11 +106,10 @@ struct GuessNumberView: View {
                                             }
                                         } label: {
                                             Text("\(number)")
-                                                .font(.title)
                                                 .frame(width: g.size.width * 0.25, height: g.size.width * 0.17)
                                                 .background(Color.white)
                                                 .foregroundColor(.black)
-                                                .fontWeight(.bold)
+                                                .font(.title.weight(.bold)) // Uses iOS's default title size + heavy weight
                                         }
                                     }
                                 }
@@ -123,11 +127,10 @@ struct GuessNumberView: View {
                                     }
                                 } label: {
                                     Text("0")
-                                        .font(.title)
                                         .frame(width: g.size.width * 0.25, height: g.size.width * 0.17)
                                         .background(Color.white)
                                         .foregroundColor(.black)
-                                        .fontWeight(.bold)
+                                        .font(.title.weight(.bold)) // Uses iOS's default title size + heavy weight
                                 }
                                 
                                 Button {
@@ -136,11 +139,10 @@ struct GuessNumberView: View {
                                     }
                                 } label: {
                                     Image(systemName: "delete.left")
-                                        .font(.title)
                                         .frame(width: g.size.width * 0.25, height: g.size.width * 0.17)
                                         .background(Color.white)
                                         .foregroundColor(.black)
-                                        .fontWeight(.bold)
+                                        .font(.title.weight(.bold)) // Uses iOS's default title size + heavy weight
                                 }
                             }
                         }
@@ -149,7 +151,6 @@ struct GuessNumberView: View {
                     }
 //                    .frame(width: g.size.width * 0.9, height: g.size.height * 0.2)
                     
-                    Spacer()
                 }
                 .frame(width: g.size.width * 0.9, height: g.size.height * 0.9)
 

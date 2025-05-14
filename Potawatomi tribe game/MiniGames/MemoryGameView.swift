@@ -31,7 +31,7 @@ struct MemoryGameView: View {
         .navigationBarBackButtonHidden()
     }
     
-    // MARK: - Subviews
+        // MARK: - Subviews
     
     private var backgroundView: some View {
         Image("\(gameViewModel.backgroundImage)")
@@ -62,8 +62,7 @@ struct MemoryGameView: View {
                     Spacer()
                     Text("CARD MATCH")
                         .foregroundStyle(.white)
-                        .fontWeight(.bold)
-                        .font(.title)
+                        .font(.title.weight(.heavy)) // Uses iOS's default title size + heavy weight
                     Spacer()
                     // Невидимая иконка для выравнивания
                     Image(systemName: "arrow.left")
@@ -105,10 +104,16 @@ struct MemoryGameView: View {
     
     private func cardsGridView(geometry: GeometryProxy) -> some View {
         VStack {
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), spacing: 5) {
+            let columns = [GridItem(.flexible()), GridItem(.flexible())]
+            let availableHeight = geometry.size.height * 0.6
+            let spacing: CGFloat = 10
+            let rows: CGFloat = 5
+            let cardHeight = (availableHeight - (spacing * (rows - 1))) / rows
+
+            LazyVGrid(columns: columns, spacing: spacing) {
                 ForEach(Array(game.cards.enumerated()), id: \.element.id) { index, card in
                     CardView(card: card)
-                        .frame(width: geometry.size.width * 0.38, height: geometry.size.width * 0.23)
+                        .frame(width: geometry.size.width * 0.38, height: cardHeight)
                         .onTapGesture {
                             handleCardTap(index)
                         }
@@ -119,7 +124,26 @@ struct MemoryGameView: View {
         .frame(height: geometry.size.height * 0.6)
 
     }
-    
+    private func cardsGridView2(geometry: GeometryProxy) -> some View {
+        let columns = [GridItem(.flexible()), GridItem(.flexible())]
+        let spacing: CGFloat = 10
+        let totalSpacing = spacing * 4 // если 5 строк, то 4 промежутка
+        let availableHeight = geometry.size.height * 0.6 - totalSpacing
+        let cardHeight = max(availableHeight / 5, 10) // минимальная высота 10
+
+        return LazyVGrid(columns: columns, spacing: spacing) {
+            ForEach(Array(game.cards.enumerated()), id: \.element.id) { index, card in
+                CardView(card: card)
+                    .frame(height: cardHeight)
+                    .aspectRatio(0.75, contentMode: .fit) // ширина адаптируется
+                    .onTapGesture {
+                        handleCardTap(index)
+                    }
+            }
+        }
+        .frame(height: geometry.size.height * 0.6)
+    }
+
     private func overlayViews(geometry: GeometryProxy) -> some View {
         Group {
             if game.lostMatch {
@@ -159,9 +183,8 @@ struct MemoryGameView: View {
                 VStack {
                     Text("OOPS!")
                         .foregroundStyle(.white)
-                        .fontWeight(.bold)
-                        .font(.largeTitle)
-                    
+                        .font(.largeTitle.weight(.heavy)) // Uses iOS's default title size + heavy weight
+
                     Button {
                         dismiss()
                     } label: {
@@ -171,8 +194,7 @@ struct MemoryGameView: View {
                                 .frame(width: geometry.size.width * 0.75, height: geometry.size.height * 0.08)
                             Text("BACK TO MAIN")
                                 .foregroundStyle(.black)
-                                .fontWeight(.bold)
-                                .font(.title3)
+                                .font(.title3.weight(.heavy)) // Uses iOS's default title size + heavy weight
                         }
                     }
                 }
@@ -220,9 +242,14 @@ struct CardView: View {
         ZStack {
             Group {
                 if flipped {
-                    Image(card.imageName)
-                        .resizable()
-                        .scaledToFit()
+                    ZStack{
+                        Rectangle()
+                            .foregroundStyle(.white)
+
+                        Image(card.imageName)
+                            .resizable()
+                            .scaledToFit()
+                    }
                 } else {
                     ZStack{
                         Rectangle()
@@ -280,224 +307,3 @@ struct FlipEffect: ViewModifier {
             .animation(.easeInOut(duration: 0.3), value: angle)
     }
 }
-
-
-/*
-        
-        GeometryReader { g in
-            ZStack{
-                Image("bg_main")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-                VStack(spacing: 0){
-
-                    ZStack(alignment: .center){
-                        BackgroundRectangle()
-                            .frame(width: g.size.width , height: g.size.height * 0.9)
-
-//                            .scaleEffect(2.8)
-                        
-                        VStack {
-                            if game.lostMatch {
-                                Image("Matches is wrong")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: g.size.width * 0.3)
-                                Button {
-                                    game.restartGame()
-                                    remainingAttempts = 5
-                                } label: {
-                                    Image("Retry")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: g.size.width * 0.18)
-
-                                }
-
-
-                            }else if game.allMatchesFound {
-                                Image("All matches found")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: g.size.width * 0.5)
-                                    .onAppear{
-                                        gameData.coins += 100
-
-                                    }
-
-                                HStack(spacing: 8) {
-                                    ForEach(game.cards.prefix(6), id: \.id) { card in
-                                        Image(card.imageName)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: g.size.width * 0.06)
-                                            .cornerRadius(8)
-                                    }
-                                }
-                                Image("Group 10")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: g.size.width * 0.2)
-
-                                Button {
-                                    game.restartGame()
-                                    remainingAttempts = 5
-
-                                } label: {
-                                    Image("Retry")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: g.size.width * 0.18)
-
-                                }
-
-
-
-                            }else {
-                                ZStack{
-                                    Image("Group 8")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: g.size.width * 0.15, height: g.size.height * 0.09)
-                                    HStack{
-                                        Image("coin")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: g.size.width * 0.05)
-                                        Text("\(gameData.coins)")
-                                            .foregroundStyle(.white)
-                                            .padding(.horizontal, 10)
-                                    }
-                                    .frame(width: g.size.width * 0.15, height: g.size.height * 0.09)
-                                }
-                                
-                                Image("Find a match")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: g.size.width * 0.3)
-                                
-                                
-                                HStack {
-                                    VStack {
-                                        Text("TRIES: \(remainingAttempts)")
-                                            .font(.headline)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.white)
-                                    }
-                                    Spacer()
-                                    VStack {
-                                        Text("TIME: \(timeLeft)")
-                                            .font(.headline)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.white)
-                                    }
-                                }
-                                .frame(width: g.size.width * 0.45)
-                                .padding()
-                                
-                                
-                                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), spacing: 010) {
-                                    ForEach(Array(game.cards.enumerated()), id: \.element.id) { index, card in
-                                        CardView(card: card)
-                                            .onTapGesture {
-                                                handleCardTap(index)
-                                            }
-                                            .frame(width: g.size.width * 0.06, height: g.size.width * 0.06)
-                                    }
-                                }
-                                .frame(width: g.size.width * 0.6)
-
-
-                                
-                            }
-                            Spacer()
-                        }
-                        .padding(.top, g.size.height * 0.1)
-
-                    }
-                    .frame(height: g.size.height * 0.8)
-
-                }
-
-            }
-
-            .onAppear(perform: startTimer)
-            .onDisappear(perform: stopTimer)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image("crossButton")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: g.size.width * 0.1, height: g.size.width * 0.1)
-
-                    }
-                    
-                    
-                }
-
-            }
-            .frame(width: g.size.width, height: g.size.height)
-
-            .navigationBarBackButtonHidden()
-
-        }
-        .navigationBarBackButtonHidden()
-
-
-    }
-    
-    private func handleCardTap(_ index: Int) {
-        guard !showReward else { return }
-        
-        let previousMatched = game.cards.filter { $0.isMatched }.count
-        game.flipCard(at: index)
-        let currentMatched = game.cards.filter { $0.isMatched }.count
-        
-        if currentMatched == previousMatched && game.indexOfFirstCard == nil {
-            remainingAttempts -= 1
-        }
-        
-        checkGameEnd()
-    }
-    
-    private func startTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            timeLeft -= 1
-            if timeLeft <= 0 {
-                game.lostMatch = true
-                stopTimer()
-                gameOver()
-            }
-        }
-    }
-    
-    private func stopTimer() {
-        timer?.invalidate()
-        timer = nil
-    }
-    
-    private func checkGameEnd() {
-        if game.cards.allSatisfy({ $0.isMatched }) {
-            game.allMatchesFound = true
-            stopTimer()
-        } else if remainingAttempts <= 0 {
-            game.lostMatch = true
-            gameOver()
-        }
-    }
-    
-    private func gameOver() {
-        stopTimer()
-    }
-}
-
-
-#Preview {
-    MemoryGameView(gameData: GameData())
-}
-
-*/

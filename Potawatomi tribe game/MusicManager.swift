@@ -12,14 +12,15 @@ import AVFoundation
 class MusicManager: ObservableObject {
     static let shared = MusicManager()
     
-    @Published var audioPlayerVolume: Float = 0.5
+    @Published var audioPlayerVolume: Float = 0.3
+    @Published var paused: Bool = false
     @Published var soundsOn = true
     var audioPlayer: AVAudioPlayer?
     
     private init() {}
     
     func playBackgroundMusic() {
-        guard let url = Bundle.main.url(forResource: "535631__williecombs__ghost-house", withExtension: "wav") else {
+        guard let url = Bundle.main.url(forResource: "Warfare-chosic.com_", withExtension: "mp3") else {
             print("Music file not found.")
             return
         }
@@ -37,13 +38,16 @@ class MusicManager: ObservableObject {
     
     func stopMusic() {
         audioPlayer?.stop()
+        paused = true
     }
     
     func pauseMusic() {
         audioPlayer?.pause()
+        paused = true
     }
     
     func resumeMusic() {
         audioPlayer?.play()
+        paused = false
     }
 }

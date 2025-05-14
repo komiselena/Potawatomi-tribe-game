@@ -42,33 +42,42 @@ class GameScene: SKScene {
     var grid = [[Int]]()
     var knightPosition = (x: 0, y: 1)
     var tileSize: CGFloat {
-        // Базовый размер для iPhone SE (меньший экран)
+        // Базовый размер для iPhone
         let baseSize: CGFloat = 40
-        // Множитель для iPad или больших устройств
-        let scaleFactor: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 1.5 : 1.0
         
-        // Дополнительно проверяем размер экрана
+        // Определяем размер экрана
         let screenSize = UIScreen.main.bounds.size
+        let screenWidth = min(screenSize.width, screenSize.height)
         let screenHeight = max(screenSize.width, screenSize.height)
         
-        // Для очень больших экранов (например, iPad Pro 12.9)
-        if screenHeight > 1000 {
-            return baseSize * 1.3
-        }
+        // Множитель для iPad
+        let iPadMultiplier: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 1.8 : 1.0
         
-        return baseSize * scaleFactor
+        // Дополнительный множитель для очень больших сеток
+        let gridSizeMultiplier: CGFloat = {
+            guard !initialGridData.isEmpty else { return 1.0 }
+            let cols = initialGridData[0].count
+            let rows = initialGridData.count
+            
+            // Если сетка очень большая (более 8 колонок или 8 строк), уменьшаем размер
+            if cols > 8 || rows > 8 {
+                return 0.8
+            }
+            return 1.0
+        }()
+        
+        // Итоговый размер с учетом всех факторов
+        return baseSize * iPadMultiplier * gridSizeMultiplier
     }
-    
-    // Добавляем свойство для отступов между рядами
+
     var rowSpacing: CGFloat {
         return tileSize * 0.56
     }
-    
-    // Добавляем свойство для смещения сущностей
+
     var entityYOffset: CGFloat {
         return tileSize * 0.4
     }
-    
+
     // Level management
     var currentLevel = 1
     let totalLevels = 10
@@ -409,86 +418,152 @@ class GameScene: SKScene {
         }
     }
     func setupHeader() {
-        // Header background (using throwButton's red color)
-        let header = SKSpriteNode(color: .red, size: CGSize(width: UIScreen.main.bounds.size.width * 0.83, height: 70))
+        // Определяем базовый размер для масштабирования
+        let baseWidth: CGFloat = 375 // Ширина iPhone 8 (базовый размер для масштабирования)
+        let scaleFactor = size.width / baseWidth
+        
+        // Header background (используем фиксированный размер относительно экрана)
+        let headerWidth = size.width * 0.83
+        let headerHeight: CGFloat = 50 * scaleFactor
+        let header = SKSpriteNode(color: .red, size: CGSize(width: headerWidth, height: headerHeight))
         header.position = CGPoint(x: 0, y: size.height/2 - header.size.height * 1.6)
-        header.zPosition = 10 // Очень высокий zPosition
+        header.zPosition = 10
         addChild(header)
         
         // Back button
-        backButton = SKSpriteNode(color: .clear, size: CGSize(width: 50, height: 50))
-        backButton.position = CGPoint(x: -size.width/2 + 60, y: header.position.y)
+        let buttonSize = CGSize(width: 40 * scaleFactor, height: 40 * scaleFactor)
+        let buttonOffset = headerWidth/2 - buttonSize.width/2 - 10 * scaleFactor
+        
+        backButton = SKSpriteNode(color: .clear, size: buttonSize)
+        backButton.position = CGPoint(x: -buttonOffset, y: header.position.y)
         backButton.name = "back"
         backButton.zPosition = 11
         
         let backLabel = SKLabelNode(text: "←")
         backLabel.fontName = "SF Pro"
-        backLabel.fontSize = 30
+        backLabel.fontSize = 24 * scaleFactor
         backLabel.verticalAlignmentMode = .center
         backLabel.horizontalAlignmentMode = .center
-        backLabel.position = CGPoint(x: 0, y: 0)
+        backLabel.position = CGPoint(x: 0, y: -5 * scaleFactor) // Небольшая вертикальная корректировка
         backButton.addChild(backLabel)
         addChild(backButton)
         
-        // Level label - используем currentLevel из gameViewModel
+        // Level label
         levelLabel = SKLabelNode(text: "LEVEL \(gameViewModel?.currentLevel ?? 1)")
         levelLabel.fontName = "Arial-BoldMT"
-        levelLabel.fontSize = 30
+        levelLabel.fontSize = 24 * scaleFactor
         levelLabel.fontColor = .white
-        levelLabel.position = CGPoint(x: 0, y: header.position.y - 15)
+        levelLabel.position = CGPoint(x: 0, y: header.position.y - 10 * scaleFactor)
         levelLabel.zPosition = 11
         addChild(levelLabel)
         
         // Restart button
-        restartButton = SKSpriteNode(color: .clear, size: CGSize(width: 50, height: 50))
-        restartButton.position = CGPoint(x: size.width/2 - 60, y: header.position.y)
+        restartButton = SKSpriteNode(color: .clear, size: buttonSize)
+        restartButton.position = CGPoint(x: buttonOffset, y: header.position.y)
         restartButton.name = "restart"
         restartButton.zPosition = 11
         
         let restartLabel = SKLabelNode(text: "↻")
         restartLabel.fontName = "System"
-        restartLabel.fontSize = 40
+        restartLabel.fontSize = 28 * scaleFactor
         restartLabel.verticalAlignmentMode = .center
         restartLabel.horizontalAlignmentMode = .center
-        restartLabel.position = CGPoint(x: 0, y: 0)
+        restartLabel.position = CGPoint(x: 0, y: -5 * scaleFactor) // Небольшая вертикальная корректировка
         restartButton.addChild(restartLabel)
         addChild(restartButton)
     }
     
     func createControls() {
-        let originalButtonSize = CGSize(width: UIScreen.main.bounds.size.width * 0.26, height: UIScreen.main.bounds.size.width * 0.2)
+        // Определяем размеры экрана
+        let screenSize = UIScreen.main.bounds.size
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
         
-        upButton = SKSpriteNode(texture: buttonUpTexture)
-        upButton.position = CGPoint(x: 0, y: -(UIScreen.main.bounds.size.width * 0.42))
-        upButton.name = "up"; upButton.size = originalButtonSize; upButton.zPosition = 2
-        addChild(upButton)
+        // Размеры кнопок
+        let directionButtonSize: CGSize
+        let throwButtonSize: CGSize
         
-        downButton = SKSpriteNode(texture: buttonDownTexture)
-        downButton.position = CGPoint(x: 0, y: -(UIScreen.main.bounds.size.width * 0.64))
-        downButton.name = "down"; downButton.size = originalButtonSize; downButton.yScale = -1; downButton.zPosition = 2
-        addChild(downButton)
+        // Отступы и позиционирование
+        let throwButtonBottomMargin: CGFloat
+        let controlsBottomMargin: CGFloat
+        let horizontalSpacing: CGFloat
         
-        leftButton = SKSpriteNode(texture: buttonLeftTexture)
-        leftButton.position = CGPoint(x: -(UIScreen.main.bounds.size.width * 0.28), y: -(UIScreen.main.bounds.size.width * 0.64))
-        leftButton.name = "left"; leftButton.size = originalButtonSize; leftButton.xScale = -1; leftButton.zPosition = 2
-        addChild(leftButton)
+        // Настройки для разных устройств
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            // Настройки для iPad
+            directionButtonSize = CGSize(width: screenWidth * 0.15, height: screenWidth * 0.15)
+            throwButtonSize = CGSize(width: screenWidth * 0.8, height: 70)
+            throwButtonBottomMargin = 60
+            controlsBottomMargin = throwButtonBottomMargin + throwButtonSize.height + 50
+            horizontalSpacing = directionButtonSize.width * 1.2
+        } else {
+            // Настройки для iPhone (всех моделей)
+            directionButtonSize = CGSize(width: screenWidth * 0.24, height: screenWidth * 0.24)
+            throwButtonSize = CGSize(width: screenWidth * 0.83, height: 60)
+            throwButtonBottomMargin = 40
+            controlsBottomMargin = throwButtonBottomMargin + throwButtonSize.height + 30
+            horizontalSpacing = directionButtonSize.width * 1.2
+        }
         
-        rightButton = SKSpriteNode(texture: buttonRightTexture)
-        rightButton.position = CGPoint(x: (UIScreen.main.bounds.size.width * 0.28), y: -(UIScreen.main.bounds.size.width * 0.64))
-        rightButton.name = "right"; rightButton.size = originalButtonSize; rightButton.zPosition = 2
-        addChild(rightButton)
+        // Позиция кнопки Throw (фиксированный отступ от низа)
+        let throwButtonY = -screenHeight/2 + throwButtonBottomMargin + throwButtonSize.height/2
         
-        throwButton = SKSpriteNode(color: .red, size: CGSize(width: UIScreen.main.bounds.size.width * 0.83, height: 70))
-        throwButton.position = CGPoint(x: 0, y: -350)
-        throwButton.name = "throw"; throwButton.zPosition = 2
+        // Позиция центра управления (выше кнопки Throw)
+        let controlsCenterY = -screenHeight/2 + controlsBottomMargin + directionButtonSize.height * 1.5
+        
+        // Создаем кнопку Throw (в самом низу)
+        throwButton = SKSpriteNode(color: .red, size: throwButtonSize)
+        throwButton.position = CGPoint(x: 0, y: throwButtonY)
+        throwButton.name = "throw"
+        throwButton.zPosition = 2
+        
         let throwLabel = SKLabelNode(text: "THROW")
-        throwLabel.fontName = "Arial-BoldMT"; throwLabel.fontSize = 24; throwLabel.fontColor = .white
-        throwLabel.verticalAlignmentMode = .center; throwLabel.position = CGPoint(x: 0, y: 0)
+        throwLabel.fontName = "Arial-BoldMT"
+        throwLabel.fontSize = UIDevice.current.userInterfaceIdiom == .pad ? 30 : 24
+        throwLabel.fontColor = .white
+        throwLabel.verticalAlignmentMode = .center
+        throwLabel.position = CGPoint(x: 0, y: 0)
         throwButton.addChild(throwLabel)
         addChild(throwButton)
         
+        // Создаем кнопки управления (выше кнопки Throw)
+        // Кнопка вверх
+        upButton = SKSpriteNode(texture: buttonUpTexture)
+        upButton.position = CGPoint(x: 0, y: controlsCenterY)
+        upButton.name = "up"
+        upButton.size = directionButtonSize
+        upButton.zPosition = 2
+        addChild(upButton)
+        
+        // Кнопка вниз
+        downButton = SKSpriteNode(texture: buttonDownTexture)
+        downButton.position = CGPoint(x: 0, y: controlsCenterY - directionButtonSize.height * 1.2)
+        downButton.name = "down"
+        downButton.size = directionButtonSize
+        downButton.yScale = -1
+        downButton.zPosition = 2
+        addChild(downButton)
+        
+        // Кнопка влево
+        leftButton = SKSpriteNode(texture: buttonLeftTexture)
+        leftButton.position = CGPoint(x: -horizontalSpacing,
+                                    y: controlsCenterY - directionButtonSize.height * 1.2)
+        leftButton.name = "left"
+        leftButton.size = directionButtonSize
+        leftButton.xScale = -1
+        leftButton.zPosition = 2
+        addChild(leftButton)
+        
+        // Кнопка вправо
+        rightButton = SKSpriteNode(texture: buttonRightTexture)
+        rightButton.position = CGPoint(x: horizontalSpacing,
+                                     y: controlsCenterY - directionButtonSize.height * 1.2)
+        rightButton.name = "right"
+        rightButton.size = directionButtonSize
+        rightButton.zPosition = 2
+        addChild(rightButton)
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)

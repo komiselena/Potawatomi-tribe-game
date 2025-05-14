@@ -44,8 +44,7 @@ struct MemorySequnceGameView: View {
                                 Spacer()
                                 Text("SIMON SAYS")
                                     .foregroundStyle(.white)
-                                    .fontWeight(.bold)
-                                    .font(.title)
+                                    .font(.title.weight(.heavy)) // Uses iOS's default title size + heavy weight
                                 Spacer()
                                 
                                 Image(systemName: "arrow.left")
@@ -76,7 +75,13 @@ struct MemorySequnceGameView: View {
                                     .transition(.scale)
                             }
                         } else {
-                            LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 2)) {
+                            let columns = [GridItem(.flexible()), GridItem(.flexible())]
+                            let availableHeight = g.size.height * 0.6
+                            let spacing: CGFloat = 10
+                            let rows: CGFloat = 5
+                            let cardHeight = (availableHeight - (spacing * (rows - 1))) / rows
+                            
+                            LazyVGrid(columns: columns, spacing: spacing) {
                                 ForEach(["card1", "card2", "card3", "card4", "card5", "card6", "card7", "card8", "card9", "card10"], id: \.self) { card in
                                     Button {
                                         viewModel.selectCard(card)
@@ -84,14 +89,12 @@ struct MemorySequnceGameView: View {
                                         Image(card)
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(width: g.size.width * 0.38, height: g.size.width * 0.23)
+                                            .frame(width: g.size.width * 0.38, height: cardHeight)
                                     }
                                 }
                             }
-
                         }
                     }
-                    .padding(.bottom)
                     .frame(height: g.size.height * 0.6)
                 }
                 .frame(width: g.size.width * 0.9, height: g.size.height * 0.9)
@@ -114,9 +117,8 @@ struct MemorySequnceGameView: View {
                                 VStack{
                                     Text("OOPS!")
                                         .foregroundStyle(.white)
-                                        .fontWeight(.bold)
-                                        .font(.largeTitle)
-                                    
+                                        .font(.largeTitle.weight(.heavy)) // Uses iOS's default title size + heavy weight
+
                                     Button {
                                         dismiss()
                                     } label: {
@@ -126,9 +128,8 @@ struct MemorySequnceGameView: View {
                                                 .frame(width: g.size.width * 0.75, height: g.size.height * 0.08)
                                             Text("BACK TO MAIN")
                                                 .foregroundStyle(.black)
-                                                .fontWeight(.bold)
-                                                .font(.title3)
-                                            
+                                                .font(.title3.weight(.heavy)) // Uses iOS's default title size + heavy weight
+
                                             
                                         }
                                     }

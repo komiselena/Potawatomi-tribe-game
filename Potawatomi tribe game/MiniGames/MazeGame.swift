@@ -8,8 +8,11 @@
 import Foundation
 import UIKit
 import SpriteKit
+import SwiftUI
 
-class MazeGameScene: SKScene {
+class MazeGameScene: SKScene, ObservableObject {
+    @Published var isWon = false
+    
     private var mazeBackground: SKShapeNode!
     private var wallsNode: SKSpriteNode!
     private var playerNode: SKShapeNode!
@@ -46,11 +49,11 @@ class MazeGameScene: SKScene {
         // 3. Флаг в правом нижнем углу
         flagNode = SKSpriteNode(imageNamed: "flag")
         flagNode.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        flagNode.position = CGPoint(x: 186, y: 10)
+        flagNode.position = exitPoint // Используем exitPoint
         flagNode.zPosition = 1
         flagNode.size = CGSize(width: 20, height: 20)
         addChild(flagNode)
-        
+
         // 4. Получаем CGImage для проверки стен
         if let img = UIImage(named: "vector")?.cgImage {
             mazeCGImage = img
@@ -76,6 +79,7 @@ class MazeGameScene: SKScene {
     func resetGame() {
         playerNode.position = startPoint
         // Удаляем все следы
+        isWon = false
         trailNodes.forEach { $0.removeFromParent() }
         trailNodes.removeAll()
         lastTrailPosition = nil
@@ -114,6 +118,8 @@ class MazeGameScene: SKScene {
         
         // Проверка достижения флага
         if playerNode.position.distance(to: flagNode.position) < 15 {
+            isWon = true
+            print("is won \(isWon)")
             onGameWon?()
         }
     }
