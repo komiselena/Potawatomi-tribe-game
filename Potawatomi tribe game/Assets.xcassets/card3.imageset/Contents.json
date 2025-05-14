@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Type=Green, Size=Large.png",
+      "filename" : "Type=Green, Size=Large.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Type=Green, Size=Large 1.png",
+      "filename" : "Type=Green, Size=Large 1.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Type=Green, Size=Large 2.png",
+      "filename" : "Type=Green, Size=Large 2.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }

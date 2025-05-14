@@ -12,8 +12,8 @@ class SceneManager {
     static let shared = SceneManager()
     
     func loadLevel(_ level: Int, in view: SKView) {
-        let scene: BaseGameScene
-        
+//        let scene: GameScene
+//        
 //        switch level {
 //        case 1:
 //            scene = GameScene(size: view.bounds.size)
@@ -28,7 +28,7 @@ class SceneManager {
 //        scene.completionHandler = { passedLevel in
 //            self.loadLevel(passedLevel + 1, in: view)
 //        }
-        
+//        
 //        view.presentScene(scene)
     }
 }

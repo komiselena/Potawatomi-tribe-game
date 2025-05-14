@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Type=Sky Blue, Size=Large.png",
+      "filename" : "Type=Sky Blue, Size=Large.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Type=Sky Blue, Size=Large 1.png",
+      "filename" : "Type=Sky Blue, Size=Large 1.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Type=Sky Blue, Size=Large 2.png",
+      "filename" : "Type=Sky Blue, Size=Large 2.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }

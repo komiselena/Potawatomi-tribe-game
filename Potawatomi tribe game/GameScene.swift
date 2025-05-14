@@ -2,12 +2,14 @@
 //  GameScene.swift
 //  Potawatomi tribe game
 //
-//  Created by Mac on 12.05.2025.
+//  Created by Mac on 12.05.2022.
 //
 import SpriteKit
 import SwiftUI
 
 class GameScene: SKScene {
+    var dismissAction: (() -> Void)?
+    var gameViewModel: GameViewModel?
     
     // Textures
     var groundTile: SKTexture!
@@ -20,11 +22,11 @@ class GameScene: SKScene {
     var buttonDownTexture: SKTexture!
     var buttonRightTexture: SKTexture!
     var buttonLeftTexture: SKTexture!
-    var throwButtonTexture: SKTexture!
     
     // Nodes
     var knight: SKSpriteNode!
     var background: SKSpriteNode!
+    var levelLabel: SKLabelNode!
     
     // Controls
     var upButton: SKSpriteNode!
@@ -32,390 +34,781 @@ class GameScene: SKScene {
     var leftButton: SKSpriteNode!
     var rightButton: SKSpriteNode!
     var throwButton: SKSpriteNode!
+    var restartButton: SKSpriteNode!
+    var backButton: SKSpriteNode!
     
     // Game field
+    var initialGridData = [[Int]]()
     var grid = [[Int]]()
-    var knightPosition = (x: 0, y: 0)
-    var facingDirection = "right"
-    let tileSize: CGFloat = 60
-    
-    override func didMove(to view: SKView) {
-        // Initialize grid (2 rows, 6 columns)
-        grid = [
-            [0, 1, 1, 1, 1, 1],  // Bottom row (y=0)
-            [2, 4, 3, 1, 5, 1]   // Top row (y=1) - knight, barrier, horse, empty, barn, empty
-        ]
+    var knightPosition = (x: 0, y: 1)
+    var tileSize: CGFloat {
+        // Базовый размер для iPhone SE (меньший экран)
+        let baseSize: CGFloat = 40
+        // Множитель для iPad или больших устройств
+        let scaleFactor: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 1.5 : 1.0
         
-        anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        loadTextures()
-        setupBackground()
-        setupLevel1()
-        createControls()
+        // Дополнительно проверяем размер экрана
+        let screenSize = UIScreen.main.bounds.size
+        let screenHeight = max(screenSize.width, screenSize.height)
+        
+        // Для очень больших экранов (например, iPad Pro 12.9)
+        if screenHeight > 1000 {
+            return baseSize * 1.3
+        }
+        
+        return baseSize * scaleFactor
     }
     
+    // Добавляем свойство для отступов между рядами
+    var rowSpacing: CGFloat {
+        return tileSize * 0.56
+    }
+    
+    // Добавляем свойство для смещения сущностей
+    var entityYOffset: CGFloat {
+        return tileSize * 0.4
+    }
+    
+    // Level management
+    var currentLevel = 1
+    let totalLevels = 10
+    var levelData: [Int: [[[Int]]]] = [:]
+    
+    let yForRow0: CGFloat = 37.5
+    let yForRow1: CGFloat = 95.0
+    
+    override func didMove(to view: SKView) {
+        setupLevelData()
+        if let currentLevel = gameViewModel?.currentLevel {
+            initialGridData = levelData[currentLevel]?[0] ?? []
+        }
+        anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        loadTextures()
+        setupGame(isRestart: false)
+    }
+    func setupLevelData() {
+        levelData = [
+            1: [
+                [[6, 1, 1, 1, 1, 1],
+                 [2, 4, 3, 1, 5, 1]]
+                
+            ],
+            
+            2: [
+                [[1, 1, 1, 5, 1, 1, 1],
+                 [1, 1, 1, 3, 1, 1, 1],
+                 [1, 1, 4, 4, 4, 1, 1],
+                 [5, 3, 4, 2, 4, 3, 5],
+                 [1, 1, 4, 4, 4, 1, 1],
+                 [1, 1, 1, 3, 1, 1, 1],
+                 [1, 1, 1, 5, 1, 1, 1]
+                 
+                ]
+                
+            ],
+            3 : [
+                [
+                    [1, 1, 1, 1, 1, 4, 2, 1, 1],
+                    [4, 4, 4, 4, 4, 4, 4, 4, 1],
+                    [1, 5, 3, 1, 5, 3, 1, 1, 1],
+                ]
+            ],
+            4 : [
+                [
+                    [1, 1, 1, 5, 6],
+                    [2, 3, 1, 3, 1],
+                    [1, 1, 1, 1, 1],
+                    [5, 3, 1, 1, 1],
+                    [1, 5, 1, 1, 1],
+                    
+                    
+                ]
+            ],
+            5: [
+                [
+                    [6, 1, 1, 1, 1, 1],
+                    [4, 1, 1, 3, 1, 1],
+                    [6, 2, 1, 1, 1, 1],
+                    [1, 1, 1, 1, 5, 1],
+                    [1, 4, 1, 1, 1, 6],
+                    [1, 1, 1, 1, 6, 6],
+                ]
+            ],
+            6: [
+                [
+                    [6, 6, 1, 1, 6, 6, 6, 6, 6, 6],
+                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 2, 1, 1, 4, 1, 1, 3, 1, 6],
+                    [1, 4, 1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 1, 1, 4, 1, 1, 1, 1, 1, 6],
+                    [1, 1, 1, 4, 1, 1, 4, 4, 4, 6],
+                    [1, 1, 1, 1, 1, 1, 5, 1, 1, 6],
+                    [1, 1, 1, 1, 1, 1, 1, 4, 4, 6],
+                    [1, 4, 4, 1, 1, 1, 1, 1, 1, 6],
+                    [1, 6, 1, 6, 1, 6, 1, 6, 6, 6]
+                    
+                ]
+            ],
+            7: [
+                [
+                    [1, 1, 5, 1, 1, 1, 5, 1, 1],
+                    [1, 1, 4, 1, 2, 1, 4, 1, 1],
+                    [4, 1, 3, 1, 1, 1, 3, 1, 4],
+                    [1, 1, 1, 1, 1, 1, 1, 1, 1],
+                    [6, 6, 6, 6, 1, 6, 6, 6, 6],
+                    [1, 1, 3, 4, 1, 4, 3, 1, 1],
+                    [5, 1, 1, 4, 1, 4, 1, 1, 5],
+                    [6, 1, 1, 6, 6, 6, 1, 1, 6],
+                    
+                ]
+            ],
+            8: [
+                [
+                    [1, 1, 1, 1, 1, 1, 5],
+                    [1, 1, 1, 3, 5, 1, 1],
+                    [1, 3, 1, 3, 1, 5, 1],
+                    [1, 1, 1, 1, 1, 1, 1],
+                    [1, 1, 1, 1, 1, 1, 1],
+                    [1, 5, 1, 3, 1, 3, 1],
+                    [1, 1, 5, 3, 1, 1, 1],
+                    [5, 1, 1, 2, 1, 1, 1],
+                    
+                    
+                ]
+            ],
+            9:
+                [
+                    [
+                        [6, 1, 1, 1, 1, 1, 1, 1, 4, 1],
+                        [6, 1, 1, 1, 3, 1, 1, 1, 4, 1],
+                        [1, 1, 1, 3, 1, 1, 1, 1, 4, 1],
+                        [1, 5, 1, 1, 2, 1, 5, 1, 1, 1],
+                        [1, 1, 4, 4, 1, 1, 1, 4, 1, 6],
+                        [1, 1, 1, 1, 1, 1, 1, 1, 1, 6],
+                        
+                    ]
+                ],
+            10: [
+                [
+                    [6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6],
+                    [1, 1, 1, 1, 4, 1, 1, 1, 3, 3, 1],
+                    [1, 3, 1, 1, 4, 1, 1, 1, 1, 1, 1],
+                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                    [1, 1, 1, 1, 5, 1, 3, 1, 2, 1, 1],
+                    [1, 1, 1, 5, 1, 5, 1, 1, 1, 1, 1],
+                    [1, 4, 1, 1, 5, 1, 1, 1, 1, 1, 1],
+                    [1, 1, 1, 4, 1, 1, 1, 1, 1, 4, 1],
+                    [1, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1],
+                    [6, 6, 6, 6, 6, 1, 1, 1, 1, 1, 1],
+                    
+                ]
+            ]
+            // Add more levels as needed
+        ]
+        
+        // Убедимся, что currentLevel установлен правильно
+        if let currentLevel = gameViewModel?.currentLevel {
+            initialGridData = levelData[currentLevel]?[0] ?? []
+        }
+    }
+    
+    
+    func setupGame(isRestart: Bool) {
+        // Полностью очищаем сцену
+        self.removeAllChildren()
+        self.removeAllActions()
+        
+        // Перезагружаем данные уровня
+        grid = initialGridData.map { $0 }
+        knightPosition = (x: 0, y: 1)
+        
+        setupBackground()
+        setupHeader()
+        setupCurrentLevel()
+        createControls()
+    }
     func loadTextures() {
         groundTile = SKTexture(imageNamed: "Group 8")
         horseTexture = SKTexture(imageNamed: "horse")
         barrierTexture = SKTexture(imageNamed: "barrier")
         barnTexture = SKTexture(imageNamed: "barn")
-
+        
         buttonUpTexture = SKTexture(imageNamed: "button1")
         buttonDownTexture = SKTexture(imageNamed: "button1")
         buttonRightTexture = SKTexture(imageNamed: "button2")
         buttonLeftTexture = SKTexture(imageNamed: "button2")
-        throwButtonTexture = SKTexture(imageNamed: "button1")
     }
     
     func setupBackground() {
         background = SKSpriteNode(texture: bgTexture)
         background.position = CGPoint(x: 0, y: 0)
-        background.zPosition = -1
+        background.zPosition = -100
         background.size = self.size
         addChild(background)
     }
     
-    func setupLevel1() {
-        // Top row (y=1) - 6 tiles
-        for x in 0..<6 {
-            let ground = SKSpriteNode(texture: groundTile)
-            ground.position = CGPoint(
-                x: CGFloat(x) * tileSize - 150,
-                y: 70  // Higher position for top row
-            )
-            ground.size = CGSize(width: tileSize, height: tileSize)
-            ground.name = "ground_1_\(x)"
-            ground.zPosition = 0
-            addChild(ground)
+    func setupCurrentLevel() {
+        guard !grid.isEmpty else { return }
+        
+        let numCols = grid[0].count
+        let numRows = grid.count
+        // Рассчитываем общий размер сетки
+        let gridWidth = CGFloat(numCols) * tileSize
+        let gridHeight = CGFloat(numRows) * rowSpacing
+        
+        let maxGridWidth = size.width * 0.9
+        let maxGridHeight = size.height * 0.7
+        
+        
+        // Если сетка слишком большая, масштабируем tileSize
+        var adjustedTileSize = tileSize
+        if gridWidth > maxGridWidth || gridHeight > maxGridHeight {
+            let widthScale = maxGridWidth / gridWidth
+            let heightScale = maxGridHeight / gridHeight
+            let scale = min(widthScale, heightScale)
+            adjustedTileSize *= scale
+        }
+        
+        
+        // Пересчитываем размеры с учетом возможного масштабирования
+        let adjustedGridWidth = CGFloat(numCols) * adjustedTileSize
+        let adjustedGridHeight = CGFloat(numRows) * (adjustedTileSize * 0.56)
+        
+        // Центрируем игровое поле
+        let startX = -adjustedGridWidth / 2 + adjustedTileSize / 2
+        let startY = -adjustedGridHeight / 2 + 100 // 100 - отступ для header
+        
+        // Find knight position
+        var knightFound = false
+        var knightGridX = 0
+        var knightGridY = 0
+        
+        // Create all ground tiles first
+        for r in 0..<numRows {
+            let yPos = startY + CGFloat(r) * rowSpacing
             
-            // Add elements according to grid
-            switch grid[1][x] {
-            case 2: // Knight
-                knight = SKSpriteNode(texture: knightTexture)
-                knight.position = ground.position
-                knight.size = CGSize(width: tileSize * 0.8, height: tileSize * 0.8)
-                knight.name = "knight"
-                addChild(knight)
-                knightPosition = (x: 0, y: 1)
+            for c in 0..<numCols {
+                let ground = SKSpriteNode(texture: groundTile)
+                ground.position = CGPoint(x: startX + CGFloat(c) * tileSize, y: yPos)
+                ground.size = CGSize(width: tileSize, height: tileSize)
+                ground.zPosition = CGFloat(-r) // Нижние ряды имеют более низкий zPosition
+                if grid[r][c] == 6 { ground.alpha = 0.0 }
+                addChild(ground)
                 
-            case 3: // Horse
-                let horse = SKSpriteNode(texture: horseTexture)
-                horse.position = ground.position
-                horse.size = CGSize(width: tileSize * 0.8, height: tileSize * 0.8)
-                horse.name = "horse_\(x)_1"
-                addChild(horse)
-                
-            case 4: // Barrier
-                let barrier = SKSpriteNode(texture: barrierTexture)
-                barrier.position = ground.position
-                barrier.size = CGSize(width: tileSize * 0.8, height: tileSize * 0.8)
-                barrier.name = "barrier_\(x)_1"
-                addChild(barrier)
-                
-            case 5: // Barn
-                let barn = SKSpriteNode(texture: barnTexture)
-                barn.position = ground.position
-                barn.size = CGSize(width: tileSize * 0.8, height: tileSize * 0.8)
-                barn.name = "barn_\(x)_1"
-                addChild(barn)
-                
-            default: break
+                if grid[r][c] == 2 {
+                    knightGridX = c
+                    knightGridY = r
+                    knightFound = true
+                }
             }
         }
         
-        // Bottom row (y=0) - 6 tiles (first one is empty/blocked)
-        for x in 0..<6 {
-            let ground = SKSpriteNode(texture: groundTile)
-            ground.position = CGPoint(
-                x: CGFloat(x) * tileSize - 150,
-                y: (tileSize/1.6)  // Lower position for bottom row
-            )
-            ground.size = CGSize(width: tileSize, height: tileSize)
-            ground.name = "ground_0_\(x)"
-            ground.zPosition = 0
-            addChild(ground)
+        // Create entities
+        for r in 0..<numRows {
+            let yPos = startY + CGFloat(r) * rowSpacing
             
-            // First tile is blocked (no ground)
-            if x == 0 {
-                ground.alpha = 0.0  // Make it visually different
-//                let blockedSign = SKSpriteNode(color: .red, size: CGSize(width: 20, height: 20))
-//                blockedSign.position = ground.position
-//                blockedSign.name = "blocked_0_0"
-//                addChild(blockedSign)
+            for c in 0..<numCols {
+                let position = CGPoint(x: startX + CGFloat(c) * tileSize,
+                                       y: yPos + entityYOffset)
+                
+                var entity: SKSpriteNode?
+                switch grid[r][c] {
+                case 2: // Knight
+                    if knightFound && c == knightGridX && r == knightGridY {
+                        knight = SKSpriteNode(texture: knightTexture)
+                        entity = knight
+                        knight.name = "knight"
+                        knightPosition = (x: c, y: r)
+                        // Устанавливаем высокий zPosition для рыцаря
+                        entity?.zPosition = 100 // Больше чем у всех других объектов
+                    }
+                case 3: // Horse
+                    entity = SKSpriteNode(texture: horseTexture)
+                    entity?.name = "horse_\(c)_\(r)"
+                case 4: // Barrier
+                    entity = SKSpriteNode(texture: barrierTexture)
+                    entity?.name = "barrier_\(c)_\(r)"
+                    entity?.zPosition = CGFloat(r) + 0.5 // Меньше чем у рыцаря
+                case 5: // Barn
+                    entity = SKSpriteNode(texture: barnTexture)
+                    entity?.name = "barn_\(c)_\(r)"
+                default: break
+                }
+                
+                if let entity = entity {
+                    entity.position = position
+                    entity.size = CGSize(width: tileSize * 0.8, height: tileSize * 0.8)
+                    entity.zPosition = CGFloat(r) + 0.5
+                    addChild(entity)
+                }
             }
         }
+        
+        if !knightFound {
+            knightPosition = (x: 0, y: 1)
+        }
+    }
+    func backToLevelSelection() {
+        dismissAction?()
+    }
+    
+    func showMessage(_ text: String, completion: (() -> Void)? = nil) {
+        let message = SKLabelNode(text: text)
+        message.fontSize = 40
+        message.fontColor = .green
+        message.position = CGPoint(x: 0, y: 0)
+        message.zPosition = 20
+        message.alpha = 0
+        addChild(message)
+        
+        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+        let wait = SKAction.wait(forDuration: 1.5)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
+        let remove = SKAction.removeFromParent()
+        
+        var sequence = [fadeIn, wait, fadeOut, remove]
+        
+        if let completion = completion {
+            sequence.append(SKAction.run {
+                completion()
+            })
+        }
+        
+        message.run(SKAction.sequence(sequence))
+    }
+    
+    
+    
+    func loadLevel(_ level: Int) {
+        guard level >= 1 && level <= totalLevels else { return }
+        
+        currentLevel = level
+        if let level = levelData[currentLevel]?[0] {
+            initialGridData = level
+        }
+        
+        setupGame(isRestart: true)
+    }
+    
+    func nextLevel() {
+        let nextLevel = (gameViewModel?.currentLevel ?? 1) + 1
+        if nextLevel <= totalLevels {
+            gameViewModel?.currentLevel = nextLevel
+//            gameViewModel?.unlockNextLevel()
+            
+            // Полностью перезагружаем уровень
+            initialGridData = levelData[nextLevel]?[0] ?? []
+            setupGame(isRestart: true)
+            
+            // Обновляем текст уровня
+            levelLabel.text = "LEVEL \(nextLevel)"
+            
+            print("Current level: \(nextLevel), Unlocked levels: \(gameViewModel?.unlockedLevels ?? 1)")
+        } else {
+            showMessage("Game Completed!")
+        }
+    }
+    func setupHeader() {
+        // Header background (using throwButton's red color)
+        let header = SKSpriteNode(color: .red, size: CGSize(width: UIScreen.main.bounds.size.width * 0.83, height: 70))
+        header.position = CGPoint(x: 0, y: size.height/2 - header.size.height * 1.6)
+        header.zPosition = 10 // Очень высокий zPosition
+        addChild(header)
+        
+        // Back button
+        backButton = SKSpriteNode(color: .clear, size: CGSize(width: 50, height: 50))
+        backButton.position = CGPoint(x: -size.width/2 + 60, y: header.position.y)
+        backButton.name = "back"
+        backButton.zPosition = 11
+        
+        let backLabel = SKLabelNode(text: "←")
+        backLabel.fontName = "SF Pro"
+        backLabel.fontSize = 30
+        backLabel.verticalAlignmentMode = .center
+        backLabel.horizontalAlignmentMode = .center
+        backLabel.position = CGPoint(x: 0, y: 0)
+        backButton.addChild(backLabel)
+        addChild(backButton)
+        
+        // Level label - используем currentLevel из gameViewModel
+        levelLabel = SKLabelNode(text: "LEVEL \(gameViewModel?.currentLevel ?? 1)")
+        levelLabel.fontName = "Arial-BoldMT"
+        levelLabel.fontSize = 30
+        levelLabel.fontColor = .white
+        levelLabel.position = CGPoint(x: 0, y: header.position.y - 15)
+        levelLabel.zPosition = 11
+        addChild(levelLabel)
+        
+        // Restart button
+        restartButton = SKSpriteNode(color: .clear, size: CGSize(width: 50, height: 50))
+        restartButton.position = CGPoint(x: size.width/2 - 60, y: header.position.y)
+        restartButton.name = "restart"
+        restartButton.zPosition = 11
+        
+        let restartLabel = SKLabelNode(text: "↻")
+        restartLabel.fontName = "System"
+        restartLabel.fontSize = 40
+        restartLabel.verticalAlignmentMode = .center
+        restartLabel.horizontalAlignmentMode = .center
+        restartLabel.position = CGPoint(x: 0, y: 0)
+        restartButton.addChild(restartLabel)
+        addChild(restartButton)
     }
     
     func createControls() {
-        let buttonSize = CGSize(width: UIScreen.main.bounds.size.width * 0.26, height: UIScreen.main.bounds.size.width * 0.2)
+        let originalButtonSize = CGSize(width: UIScreen.main.bounds.size.width * 0.26, height: UIScreen.main.bounds.size.width * 0.2)
         
-        // Up button
         upButton = SKSpriteNode(texture: buttonUpTexture)
         upButton.position = CGPoint(x: 0, y: -(UIScreen.main.bounds.size.width * 0.42))
-        upButton.name = "up"
-        upButton.size = buttonSize
+        upButton.name = "up"; upButton.size = originalButtonSize; upButton.zPosition = 2
         addChild(upButton)
         
-        // Down button
         downButton = SKSpriteNode(texture: buttonDownTexture)
         downButton.position = CGPoint(x: 0, y: -(UIScreen.main.bounds.size.width * 0.64))
-        downButton.name = "down"
-        downButton.size = buttonSize
-        downButton.yScale = -1
+        downButton.name = "down"; downButton.size = originalButtonSize; downButton.yScale = -1; downButton.zPosition = 2
         addChild(downButton)
         
-        // Left button
         leftButton = SKSpriteNode(texture: buttonLeftTexture)
         leftButton.position = CGPoint(x: -(UIScreen.main.bounds.size.width * 0.28), y: -(UIScreen.main.bounds.size.width * 0.64))
-        leftButton.name = "left"
-        leftButton.size = buttonSize
-        leftButton.xScale = -1
+        leftButton.name = "left"; leftButton.size = originalButtonSize; leftButton.xScale = -1; leftButton.zPosition = 2
         addChild(leftButton)
         
-        // Right button
         rightButton = SKSpriteNode(texture: buttonRightTexture)
         rightButton.position = CGPoint(x: (UIScreen.main.bounds.size.width * 0.28), y: -(UIScreen.main.bounds.size.width * 0.64))
-        rightButton.name = "right"
-        rightButton.size = buttonSize
+        rightButton.name = "right"; rightButton.size = originalButtonSize; rightButton.zPosition = 2
         addChild(rightButton)
         
-        // Throw button
         throwButton = SKSpriteNode(color: .red, size: CGSize(width: UIScreen.main.bounds.size.width * 0.83, height: 70))
         throwButton.position = CGPoint(x: 0, y: -350)
-        throwButton.name = "throw"
-        
+        throwButton.name = "throw"; throwButton.zPosition = 2
         let throwLabel = SKLabelNode(text: "THROW")
-        throwLabel.fontName = "Arial-BoldMT"
-        throwLabel.fontSize = 24
-        throwLabel.fontColor = .white
-        throwLabel.verticalAlignmentMode = .center
-        throwLabel.position = CGPoint(x: 0, y: 0)
+        throwLabel.fontName = "Arial-BoldMT"; throwLabel.fontSize = 24; throwLabel.fontColor = .white
+        throwLabel.verticalAlignmentMode = .center; throwLabel.position = CGPoint(x: 0, y: 0)
         throwButton.addChild(throwLabel)
-        
         addChild(throwButton)
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
+        let touchedNodes = nodes(at: location)
         
-        for node in nodes(at: location) {
-            switch node.name {
-            case "up": moveKnight(direction: "up")
-            case "down": moveKnight(direction: "down")
-            case "left": moveKnight(direction: "left")
-            case "right": moveKnight(direction: "right")
-            case "throw": throwHorse()
-            default: break
-            }
-        }
-    }
-    
-    func moveKnight(direction: String) {
-        var newX = knightPosition.x
-        var newY = knightPosition.y
-        
-        switch direction {
-        case "up": newY += 1
-        case "down": newY -= 1
-        case "left": newX -= 1
-        case "right": newX += 1
-        default: return
-        }
-        
-        // Check boundaries and valid move
-        guard newY >= 0, newY < grid.count,
-              newX >= 0, newX < grid[newY].count,
-              grid[newY][newX] == 1 else { return }
-        
-        // Update grid and position
-        grid[knightPosition.y][knightPosition.x] = 1
-        grid[newY][newX] = 2
-        knightPosition = (x: newX, y: newY)
-        
-        // Calculate new position
-        let newPos = CGPoint(
-            x: CGFloat(newX) * tileSize - 150,
-            y: newY == 0 ? 0 : 70  // Different y positions for rows
-        )
-        
-        // Animate movement
-        knight.run(SKAction.move(to: newPos, duration: 0.2))
-        facingDirection = direction
-    }
-    
-    func throwHorse() {
-        let directions = ["up", "down", "left", "right"]
-        
-        for direction in directions {
-            var x = knightPosition.x
-            var y = knightPosition.y
-            var horseFound = false
-            var barnFound = false
+        for node in touchedNodes {
+            if node.name == "up" { moveKnight(direction: "up"); return }
+            if node.name == "down" { moveKnight(direction: "down"); return }
+            if node.name == "left" { moveKnight(direction: "left"); return }
+            if node.name == "right" { moveKnight(direction: "right"); return }
+            if node.name == "throw" { performThrowAction(); return }
+            if node.name == "restart" { restartLevel(); return }
+            if node.name == "back" { backToLevelSelection(); return }
             
-            // Ищем коня в текущем направлении
-            while true {
-                switch direction {
-                case "up": y += 1
-                case "down": y -= 1
-                case "left": x -= 1
-                case "right": x += 1
-                default: break
-                }
-                
-                // Проверяем границы
-                guard y >= 0, y < grid.count,
-                      x >= 0, x < grid[y].count else { break }
-                
-                // Если нашли коня
-                if grid[y][x] == 3 {
-                    horseFound = true
-                    break
-                }
-                
-                // Если нашли загон
-                if grid[y][x] == 5 {
-                    barnFound = true
-                    break
-                }
-                
-                // Если упёрлись в препятствие (не пустая клетка)
-                if grid[y][x] != 1 && grid[y][x] != 0 {
-                    break
-                }
-            }
-            
-            // Если конь найден, двигаем его
-            if horseFound {
-                moveHorse(from: (x, y), direction: direction)
+            // Handle modal buttons
+            if node.name == "nextLevelButton" || node.name == "modalBackButton" {
+                handleModalButtonTouched(node)
                 return
             }
         }
     }
-    func removeHorse(at position: (x: Int, y: Int)) {
-        if let horse = childNode(withName: "horse_\(position.x)_\(position.y)") {
-            horse.removeFromParent()
-            grid[position.y][position.x] = 1
-            
-            // Wind animation
-            let wind = SKSpriteNode(color: .cyan, size: CGSize(width: 10, height: 10))
-            wind.position = knight.position
-            wind.alpha = 0.7
-            addChild(wind)
-            
-            let path = CGMutablePath()
-            path.move(to: knight.position)
-            path.addLine(to: horse.position)
-            
-            wind.run(SKAction.sequence([
-                SKAction.follow(path, asOffset: false, orientToPath: false, duration: 0.3),
-                SKAction.removeFromParent()
-            ]))
-            
-            checkWin()
+    func restartLevel() {
+        setupGame(isRestart: true)
+    }
+    
+    func showLevelCompleteModal() {
+        let dimBackground = SKSpriteNode(color: .black, size: self.size)
+        dimBackground.position = CGPoint(x: 0, y: 0)
+        dimBackground.zPosition = 99
+        dimBackground.alpha = 0.3
+        dimBackground.name = "dimBackground"
+        addChild(dimBackground)
+        
+        // Create red modal background (немного большего размера)
+        let modalBackground = SKSpriteNode(color: .red, size: CGSize(width: 340, height: 280))
+        modalBackground.position = CGPoint(x: 0, y: 0)
+        modalBackground.zPosition = 100
+        modalBackground.name = "levelCompleteModal"
+        addChild(modalBackground)
+        
+        // Add stars image
+        let stars = SKSpriteNode(imageNamed: "stars")
+        stars.position = CGPoint(x: 0, y: 140)
+        stars.zPosition = 101
+        stars.size = CGSize(width: 250, height: 110)
+        modalBackground.addChild(stars)
+        
+        // Add level complete label (белый цвет)
+        let completeLabel = SKLabelNode(text: "LEVEL COMPLETED")
+        completeLabel.fontSize = 30
+        completeLabel.fontColor = .white
+        completeLabel.fontName = "Arial-BoldMT"
+        completeLabel.position = CGPoint(x: 0, y: 20)
+        completeLabel.zPosition = 101
+        completeLabel.name = "levelCompleteModal"
+        modalBackground.addChild(completeLabel)
+        
+        // Next level button (белый прямоугольник с черным текстом)
+        let nextLevelButton = SKSpriteNode(color: .white, size: CGSize(width: 280, height: 55))
+        nextLevelButton.position = CGPoint(x: 0, y: -40)
+        nextLevelButton.zPosition = 101
+        nextLevelButton.name = "nextLevelButton"
+        
+        let nextLabel = SKLabelNode(text: "NEXT LEVEL")
+        nextLabel.fontSize = 20
+        nextLabel.fontColor = .black
+        nextLabel.fontName = "Arial-BoldMT"
+        nextLabel.verticalAlignmentMode = .center
+        nextLabel.horizontalAlignmentMode = .center
+        nextLabel.position = CGPoint(x: 0, y: 0)
+        nextLevelButton.addChild(nextLabel)
+        modalBackground.addChild(nextLevelButton)
+        
+        // Back to menu button (белый прямоугольник с черным текстом)
+        let backButton = SKSpriteNode(color: .white, size: CGSize(width: 280, height: 55))
+        backButton.position = CGPoint(x: 0, y: -100)
+        backButton.zPosition = 101
+        backButton.name = "modalBackButton"
+        
+        let backLabel = SKLabelNode(text: "BACK TO MENU")
+        backLabel.fontSize = 20
+        backLabel.fontColor = .black
+        backLabel.fontName = "Arial-BoldMT"
+        backLabel.verticalAlignmentMode = .center
+        backLabel.horizontalAlignmentMode = .center
+        backLabel.position = CGPoint(x: 0, y: 0)
+        backButton.addChild(backLabel)
+        modalBackground.addChild(backButton)
+    }
+    
+    func handleModalButtonTouched(_ node: SKNode) {
+        // Удаляем затемнение и модальное окно
+        self.enumerateChildNodes(withName: "dimBackground") { node, _ in
+            node.removeFromParent()
         }
+        self.enumerateChildNodes(withName: "levelCompleteModal") { node, _ in
+            node.removeFromParent()
+        }
+        
+        if node.name == "nextLevelButton" {
+            nextLevel()
+        } else if node.name == "modalBackButton" {
+            backToLevelSelection()
+        }
+    }
+    
+    func moveKnight(direction: String) {
+        var newGridX = knightPosition.x
+        var newGridY = knightPosition.y
+        switch direction {
+        case "up": newGridY += 1
+        case "down": newGridY -= 1
+        case "left": newGridX -= 1
+        case "right": newGridX += 1
+        default: return
+        }
+        
+        guard grid.indices.contains(newGridY), grid[newGridY].indices.contains(newGridX) else { return }
+        if newGridY == 0 && (grid[newGridY][newGridX] == 6 || grid[newGridY][newGridX] != 1) { return }
+        let targetTileType = grid[newGridY][newGridX]
+        guard targetTileType == 1 else { return }
+        
+        grid[knightPosition.y][knightPosition.x] = 1
+        grid[newGridY][newGridX] = 2
+        knightPosition = (x: newGridX, y: newGridY)
+        
+        let moveAction = SKAction.move(to: getVisualPosition(gridX: newGridX, gridY: newGridY), duration: 0.2)
+        // Сохраняем высокий zPosition при движении
+        knight.zPosition = 100
+        knight.run(moveAction)
+    }
+    func performThrowAction() {
+        let directions: [(dx: Int, dy: Int, name: String)] = [
+            (0, 1, "up"),
+            (0, -1, "down"),
+            (-1, 0, "left"),
+            (1, 0, "right")
+        ]
+        
+        for direction in directions {
+            // Create wind/arrow animation in this direction
+            animateWind(direction: direction)
+            
+            // Check for horse in this direction
+            checkAndMoveHorse(direction: direction)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.checkWin()
+            }
+            
+        }
+    }
+    
+    func animateWind(direction: (dx: Int, dy: Int, name: String)) {
+        let windSize = CGSize(width: tileSize * 0.3, height: tileSize * 0.1)
+        let wind = SKShapeNode(rect: CGRect(origin: CGPoint(x: -windSize.width/2, y: -windSize.height/2),
+                                            size: windSize),
+                               cornerRadius: windSize.height/2)
+        wind.fillColor = .white
+        wind.strokeColor = .clear
+        wind.position = knight.position
+        wind.zPosition = 5
+        addChild(wind)
+        
+        // Calculate end position (edge of the screen in this direction)
+        let maxDistance = max(frame.width, frame.height)
+        let endPosition: CGPoint
+        
+        switch direction.name {
+        case "up":
+            endPosition = CGPoint(x: knight.position.x, y: knight.position.y + maxDistance)
+            wind.zRotation = .pi / 2
+        case "down":
+            endPosition = CGPoint(x: knight.position.x, y: knight.position.y - maxDistance)
+            wind.zRotation = -.pi / 2
+        case "left":
+            endPosition = CGPoint(x: knight.position.x - maxDistance, y: knight.position.y)
+            wind.zRotation = .pi
+        case "right":
+            endPosition = CGPoint(x: knight.position.x + maxDistance, y: knight.position.y)
+            wind.zRotation = 0
+        default:
+            endPosition = knight.position
+        }
+        
+        let moveAction = SKAction.move(to: endPosition, duration: 0.5)
+        let fadeAction = SKAction.fadeOut(withDuration: 0.5)
+        let group = SKAction.group([moveAction, fadeAction])
+        wind.run(SKAction.sequence([group, SKAction.removeFromParent()]))
+    }
+    
+    func checkAndMoveHorse(direction: (dx: Int, dy: Int, name: String)) {
+        var currentX = knightPosition.x + direction.dx
+        var currentY = knightPosition.y + direction.dy
+        
+        // Find first horse in this direction
+        var horsesToMove = [(x: Int, y: Int)]()
+        
+        while grid.indices.contains(currentY) && grid[currentY].indices.contains(currentX) {
+            if grid[currentY][currentX] == 3 { // Horse found
+                horsesToMove.append((x: currentX, y: currentY))
+                
+                //                moveHorseToEdge(horseX: currentX, horseY: currentY, direction: direction)
+                //                return
+            }
+            currentX += direction.dx
+            currentY += direction.dy
+        }
+        for horse in horsesToMove {
+            moveHorseToEdge(horseX: horse.x, horseY: horse.y, direction: direction)
+        }
+        
+        
+    }
+    
+    func moveHorseToEdge(horseX: Int, horseY: Int, direction: (dx: Int, dy: Int, name: String)) {
+        var newX = horseX
+        var newY = horseY
+        var path = [(x: Int, y: Int)]()
+        
+        while true {
+            let nextX = newX + direction.dx
+            let nextY = newY + direction.dy
+            
+            if grid.indices.contains(nextY) && grid[nextY].indices.contains(nextX) {
+                if grid[nextY][nextX] == 1 {
+                    path.append((x: nextX, y: nextY))
+                    newX = nextX
+                    newY = nextY
+                    continue
+                } else if grid[nextY][nextX] == 5 {
+                    path.append((x: nextX, y: nextY))
+                    break
+                }
+            }
+            break
+        }
+        
+        if path.isEmpty { return }
+        
+        grid[horseY][horseX] = 1
+        
+        guard let horseNode = childNode(withName: "horse_\(horseX)_\(horseY)") as? SKSpriteNode else { return }
+        
+        var actions = [SKAction]()
+        
+        for position in path {
+            let destination = getVisualPosition(gridX: position.x, gridY: position.y)
+            actions.append(SKAction.move(to: destination, duration: 0.2))
+            
+            if grid.indices.contains(position.y) && grid[position.y].indices.contains(position.x) && grid[position.y][position.x] == 5 {
+                actions.append(SKAction.fadeOut(withDuration: 0.2))
+                actions.append(SKAction.removeFromParent())
+            }
+        }
+        
+        let finalPosition = path.last!
+        if grid.indices.contains(finalPosition.y) && grid[finalPosition.y].indices.contains(finalPosition.x) {
+            if grid[finalPosition.y][finalPosition.x] != 5 {
+                grid[finalPosition.y][finalPosition.x] = 3
+                horseNode.name = "horse_\(finalPosition.x)_\(finalPosition.y)"
+            }
+        }
+        
+        horseNode.run(SKAction.sequence(actions)) {
+            self.checkWin()
+        }
+    }
+    
+    func getVisualPosition(gridX: Int, gridY: Int) -> CGPoint {
+        guard !grid.isEmpty else { return .zero }
+        
+        let numCols = grid[0].count
+        let numRows = grid.count
+        
+        // Рассчитываем общий размер сетки с текущим tileSize
+        let gridWidth = CGFloat(numCols) * tileSize
+        let gridHeight = CGFloat(numRows) * rowSpacing
+        
+        // Рассчитываем максимально возможный размер, который помещается на экране
+        let maxGridWidth = size.width * 0.9
+        let maxGridHeight = size.height * 0.7
+        
+        // Определяем, нужно ли масштабирование
+        var scale: CGFloat = 1.0
+        if gridWidth > maxGridWidth || gridHeight > maxGridHeight {
+            let widthScale = maxGridWidth / gridWidth
+            let heightScale = maxGridHeight / gridHeight
+            scale = min(widthScale, heightScale)
+        }
+        
+        // Применяем масштабирование
+        let scaledTileSize = tileSize * scale
+        let scaledRowSpacing = rowSpacing * scale
+        let scaledEntityYOffset = entityYOffset * scale
+        
+        // Центрируем игровое поле с учетом масштаба
+        let scaledGridWidth = CGFloat(numCols) * scaledTileSize
+        let scaledGridHeight = CGFloat(numRows) * scaledRowSpacing
+        
+        let startX = -scaledGridWidth / 2 + scaledTileSize / 2
+        let startY = -scaledGridHeight / 2 + 100 * scale // Масштабируем отступ для header
+        
+        return CGPoint(
+            x: startX + CGFloat(gridX) * scaledTileSize,
+            y: startY + CGFloat(gridY) * scaledRowSpacing + scaledEntityYOffset
+        )
     }
     
     func checkWin() {
-        for row in grid {
-            if row.contains(3) { return }
-        }
-        
-        let label = SKLabelNode(text: "Level Complete!")
-        label.fontSize = 40
-        label.fontColor = .green
-        label.position = CGPoint(x: 0, y: 0)
-        addChild(label)
-    }
-    
-    func moveHorse(from position: (x: Int, y: Int), direction: String) {
-        var x = position.x
-        var y = position.y
-        var finalX = x
-        var finalY = y
-        
-        // Ищем конечную позицию
-        while true {
-            switch direction {
-            case "up": finalY += 1
-            case "down": finalY -= 1
-            case "left": finalX -= 1
-            case "right": finalX += 1
-            default: break
-            }
-            
-            // Проверяем границы
-            guard finalY >= 0, finalY < grid.count,
-                  finalX >= 0, finalX < grid[finalY].count else {
-                // Если вышли за границы, возвращаемся на последнюю допустимую клетку
-                switch direction {
-                case "up": finalY -= 1
-                case "down": finalY += 1
-                case "left": finalX += 1
-                case "right": finalX -= 1
-                default: break
-                }
-                break
-            }
-            
-            // Если упёрлись в препятствие (не пустая клетка и не загон)
-            if grid[finalY][finalX] != 1 && grid[finalY][finalX] != 5 {
-                switch direction {
-                case "up": finalY -= 1
-                case "down": finalY += 1
-                case "left": finalX += 1
-                case "right": finalX -= 1
-                default: break
-                }
-                break
-            }
-            
-            // Если нашли загон, останавливаемся
-            if grid[finalY][finalX] == 5 {
-                break
+        for r in 0..<grid.count {
+            for c in 0..<grid[r].count {
+                if grid[r][c] == 3 { return } // Horse still on field
             }
         }
         
-        // Обновляем сетку и перемещаем коня
-        grid[position.y][position.x] = 1 // Освобождаем старую позицию
+        // Разблокируем следующий уровень только если это необходимо
+        gameViewModel?.unlockNextLevel()
         
-        // Если конечная позиция - загон, удаляем коня
-        if grid[finalY][finalX] == 5 {
-            if let horse = childNode(withName: "horse_\(x)_\(y)") {
-                horse.removeFromParent()
-            }
-            checkWin()
-        } else {
-            // Иначе перемещаем коня на новую позицию
-            grid[finalY][finalX] = 3
-            if let horse = childNode(withName: "horse_\(x)_\(y)") {
-                horse.name = "horse_\(finalX)_\(finalY)"
-                
-                let newPos = CGPoint(
-                    x: CGFloat(finalX) * tileSize - 150,
-                    y: finalY == 0 ? 0 : 70
-                )
-                
-                horse.run(SKAction.move(to: newPos, duration: 0.3))
-            }
-        }
-        
-        // Анимация "ветра" (стрелы)
-        let wind = SKSpriteNode(color: .cyan, size: CGSize(width: 10, height: 10))
-        wind.position = knight.position
-        wind.alpha = 0.7
-        addChild(wind)
-        
-        let path = CGMutablePath()
-        path.move(to: knight.position)
-        
-        // Рассчитываем конечную точку ветра
-        let windEndX = knight.position.x + CGFloat(finalX - position.x) * tileSize
-        let windEndY = knight.position.y + CGFloat(finalY - position.y) * (finalY == 0 ? -70 : 70)
-        path.addLine(to: CGPoint(x: windEndX, y: windEndY))
-        
-        wind.run(SKAction.sequence([
-            SKAction.follow(path, asOffset: false, orientToPath: false, duration: 0.3),
-            SKAction.removeFromParent()
-        ]))
+        // Show level complete modal
+        showLevelCompleteModal()
     }
 }

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Type=Silver, Size=Large.png",
+      "filename" : "Type=Silver, Size=Large.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Type=Silver, Size=Large 1.png",
+      "filename" : "Type=Silver, Size=Large 1.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Type=Silver, Size=Large 2.png",
+      "filename" : "Type=Silver, Size=Large 2.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }

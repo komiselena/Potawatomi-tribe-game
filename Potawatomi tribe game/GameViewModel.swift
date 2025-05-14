@@ -11,6 +11,26 @@ import Foundation
 class GameViewModel: ObservableObject {
     @Published var backgroundImage: String = "BG1"
     @Published var skin: String = "skin1"
+    @Published var currentLevel: Int = 1
+    @Published var unlockedLevels: Int = 1
+    
+    func unlockNextLevel() {
+        // Разблокируем следующий уровень только если текущий уровень равен последнему разблокированному
+        if currentLevel == unlockedLevels {
+            unlockedLevels = currentLevel + 1
+        }
+        
+        // Проверяем достижения
+        if currentLevel == 2 {
+            completedFirstLevel = true
+        } else if currentLevel == 6 {
+            completed5Levels = true
+        } else if currentLevel == 8 {
+            completed7Levels = true
+        } else if currentLevel == 10 {
+            completedAllLevels = true
+        }
+    }
     
     @Published var completedFirstLevel: Bool = false
     @Published var completed5Levels: Bool = false

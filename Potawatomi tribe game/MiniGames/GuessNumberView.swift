@@ -62,7 +62,7 @@ struct GuessNumberView: View {
                                 ZStack {
                                     Rectangle()
                                         .fill(Color.red)
-                                        .frame(width: g.size.width * 0.28, height: g.size.width * 0.28)
+                                        .frame(width: g.size.width * 0.25, height: g.size.width * 0.25)
                                     
                                     if index < game.guess.count {
                                         Text(String(game.guess[game.guess.index(game.guess.startIndex, offsetBy: index)]))
@@ -72,7 +72,7 @@ struct GuessNumberView: View {
                                 }
                             }
                         }
-                        .frame(width: g.size.width * 0.9, height: g.size.width * 0.28)
+                        .frame(width: g.size.width * 0.9, height: g.size.width * 0.25)
 
                         // Подсказка
                         if !game.hint.isEmpty {
@@ -102,7 +102,7 @@ struct GuessNumberView: View {
                                         } label: {
                                             Text("\(number)")
                                                 .font(.title)
-                                                .frame(width: g.size.width * 0.27, height: g.size.width * 0.2)
+                                                .frame(width: g.size.width * 0.25, height: g.size.width * 0.17)
                                                 .background(Color.white)
                                                 .foregroundColor(.black)
                                                 .fontWeight(.bold)
@@ -114,7 +114,7 @@ struct GuessNumberView: View {
                             // Последний ряд (только 0 по центру)
                             HStack(spacing: 10) {
                                 Spacer()
-                                    .frame(width: g.size.width * 0.27, height: g.size.width * 0.2)
+                                    .frame(width: g.size.width * 0.25, height: g.size.width * 0.17)
 
                                 Button {
                                     if game.guess.count < 3 && !game.isWon {
@@ -124,7 +124,7 @@ struct GuessNumberView: View {
                                 } label: {
                                     Text("0")
                                         .font(.title)
-                                        .frame(width: g.size.width * 0.27, height: g.size.width * 0.2)
+                                        .frame(width: g.size.width * 0.25, height: g.size.width * 0.17)
                                         .background(Color.white)
                                         .foregroundColor(.black)
                                         .fontWeight(.bold)
@@ -137,7 +137,7 @@ struct GuessNumberView: View {
                                 } label: {
                                     Image(systemName: "delete.left")
                                         .font(.title)
-                                        .frame(width: g.size.width * 0.27, height: g.size.width * 0.2)
+                                        .frame(width: g.size.width * 0.25, height: g.size.width * 0.17)
                                         .background(Color.white)
                                         .foregroundColor(.black)
                                         .fontWeight(.bold)
@@ -147,14 +147,16 @@ struct GuessNumberView: View {
                         .frame(width: g.size.width * 0.9, height: g.size.height * 0.6)
 
                     }
-                    .frame(width: g.size.width * 0.9, height: g.size.height * 0.9)
+//                    .frame(width: g.size.width * 0.9, height: g.size.height * 0.2)
                     
                     Spacer()
                 }
-                .frame(width: g.size.width , height: g.size.height )
+                .frame(width: g.size.width * 0.9, height: g.size.height * 0.9)
 
 
             }
+            .frame(width: g.size.width , height: g.size.height )
+
             .overlay {
                 if game.isWon {
                     ZStack{
@@ -166,7 +168,15 @@ struct GuessNumberView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: g.size.width * 0.9, height: g.size.height * 0.4)
+                            .onTapGesture {
+                                dismiss()
+                            }
                     }
+                }
+            }
+            .onChange(of: game.isWon) { newValue in
+                if game.isWon == true{
+                    gameData.addCoins(20)
                 }
             }
 

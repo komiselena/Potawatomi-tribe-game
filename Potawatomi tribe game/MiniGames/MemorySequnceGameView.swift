@@ -84,77 +84,86 @@ struct MemorySequnceGameView: View {
                                         Image(card)
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(width: g.size.width * 0.38, height: g.size.width * 0.3)
+                                            .frame(width: g.size.width * 0.38, height: g.size.width * 0.23)
                                     }
                                 }
                             }
+
                         }
                     }
                     .padding(.bottom)
-                    .frame(width: g.size.width * 0.9, height: g.size.height * 0.7)
+                    .frame(height: g.size.height * 0.6)
                 }
                 .frame(width: g.size.width * 0.9, height: g.size.height * 0.9)
 
-                .overlay {
-                    if viewModel.isGameOver && viewModel.isWon == false {
-                        ZStack{
-                            Color.black
-                                .opacity(0.3)
-                                .ignoresSafeArea()
-                            VStack{
-                                Spacer()
-                                ZStack{
-                                    Rectangle()
-                                        .foregroundStyle(.red)
-                                        .frame(width: g.size.width * 0.9, height: g.size.height * 0.3)
-                                    VStack{
-                                        Text("OOPS!")
-                                            .foregroundStyle(.white)
-                                            .fontWeight(.bold)
-                                            .font(.largeTitle)
-                                        
-                                        Button {
-                                            dismiss()
-                                        } label: {
-                                            ZStack{
-                                                Rectangle()
-                                                    .foregroundStyle(.white)
-                                                    .frame(width: g.size.width * 0.75, height: g.size.height * 0.08)
-                                                Text("BACK TO MAIN")
-                                                    .foregroundStyle(.black)
-                                                    .fontWeight(.bold)
-                                                    .font(.title3)
-                                                
-                                                
-                                            }
-                                        }
-                                        
-                                        
-                                    }
-                                    .frame(width: g.size.width * 0.75, height: g.size.height * 0.35)
-                                    
-                                }
-                                Spacer()
-                            }
-                        }
-                    } else if viewModel.isGameOver && viewModel.isWon {
-                        ZStack{
-                            Color.black
-                                .opacity(0.3)
-                                .ignoresSafeArea()
-                            
-                            Image("Button-4")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: g.size.width * 0.9, height: g.size.height * 0.4)
-                        }
-                    }
-                }
 
             }
             .frame(width: g.size.width , height: g.size.height)
+            .overlay{
+                if viewModel.isGameOver && viewModel.isWon == false {
+                    ZStack{
+                        Color.black
+                            .opacity(0.3)
+                            .ignoresSafeArea()
+                        VStack{
+                            Spacer()
+                            ZStack{
+                                Rectangle()
+                                    .foregroundStyle(.red)
+                                    .frame(width: g.size.width * 0.9, height: g.size.height * 0.3)
+                                VStack{
+                                    Text("OOPS!")
+                                        .foregroundStyle(.white)
+                                        .fontWeight(.bold)
+                                        .font(.largeTitle)
+                                    
+                                    Button {
+                                        dismiss()
+                                    } label: {
+                                        ZStack{
+                                            Rectangle()
+                                                .foregroundStyle(.white)
+                                                .frame(width: g.size.width * 0.75, height: g.size.height * 0.08)
+                                            Text("BACK TO MAIN")
+                                                .foregroundStyle(.black)
+                                                .fontWeight(.bold)
+                                                .font(.title3)
+                                            
+                                            
+                                        }
+                                    }
+                                    
+                                    
+                                }
+                                .frame(width: g.size.width * 0.75, height: g.size.height * 0.35)
+                                
+                            }
+                            Spacer()
+                        }
+                    }
+                } else if viewModel.isGameOver && viewModel.isWon {
+                    ZStack{
+                        Color.black
+                            .opacity(0.3)
+                            .ignoresSafeArea()
+                        
+                        Image("Button-4")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: g.size.width * 0.9, height: g.size.height * 0.4)
+                            .onTapGesture {
+                                dismiss()
+                            }
 
-            
+                    }
+                }
+            }
+            .onChange(of: viewModel.isWon) { newValue in
+                if viewModel.isGameOver && viewModel.isWon {
+                    gameData.addCoins(30)
+                }
+            }
+
             
             .onAppear {
                 viewModel.startGame()

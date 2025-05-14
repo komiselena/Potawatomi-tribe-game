@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Type=Red, Size=Large.jpg",
+      "filename" : "Stars-2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Type=Red, Size=Large 1.jpg",
+      "filename" : "Stars-2 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Type=Red, Size=Large 2.jpg",
+      "filename" : "Stars-2 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

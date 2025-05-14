@@ -22,8 +22,11 @@ struct MemoryGameView: View {
             ZStack {
                 backgroundView
                 mainContent(geometry: geometry)
+
                 overlayViews(geometry: geometry)
             }
+            .frame(width: geometry.size.width , height: geometry.size.height)
+
         }
         .navigationBarBackButtonHidden()
     }
@@ -40,8 +43,9 @@ struct MemoryGameView: View {
     private func mainContent(geometry: GeometryProxy) -> some View {
         VStack(spacing: 10) {
             headerView(geometry: geometry)
-//            Spacer()
+            Spacer()
             cardsGridView(geometry: geometry)
+
         }
         .frame(width: geometry.size.width * 0.9, height: geometry.size.height * 0.9)
     }
@@ -104,14 +108,16 @@ struct MemoryGameView: View {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), spacing: 5) {
                 ForEach(Array(game.cards.enumerated()), id: \.element.id) { index, card in
                     CardView(card: card)
-                        .frame(width: geometry.size.width * 0.4, height: geometry.size.width * 0.25)
+                        .frame(width: geometry.size.width * 0.38, height: geometry.size.width * 0.23)
                         .onTapGesture {
                             handleCardTap(index)
                         }
                 }
             }
+
         }
-        .frame(height: geometry.size.height * 0.9)
+        .frame(height: geometry.size.height * 0.6)
+
     }
     
     private func overlayViews(geometry: GeometryProxy) -> some View {
@@ -129,6 +135,10 @@ struct MemoryGameView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.4)
+                        .onTapGesture {
+                            dismiss()
+                        }
+
                 }
             }
         }
@@ -191,6 +201,7 @@ struct MemoryGameView: View {
     private func checkGameEnd() {
         if game.cards.allSatisfy({ $0.isMatched }) {
             game.allMatchesFound = true
+            gameData.addCoins(30)
         } else if remainingAttempts <= 0 {
             game.lostMatch = true
         }

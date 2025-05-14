@@ -62,7 +62,7 @@ struct MazeView: View {
                     
                     VStack(spacing: 30){
                         SpriteView(scene: scene)
-                            .frame(width: g.size.width * 0.9, height: g.size.width * 0.9)
+                            .frame(width: g.size.width * 0.7, height: g.size.width * 0.7)
                             .border(Color.white)
 //                            .padding(.leading, 20)
                         
@@ -71,14 +71,14 @@ struct MazeView: View {
                             Button(action: { scene.movePlayer(dx: 0, dy: scene.moveStep) }) {
                                 Image("button1")
                                     .resizable()
-                                    .frame(width: g.size.width * 0.26, height: g.size.width * 0.2)
+                                    .frame(width: g.size.width * 0.23, height: g.size.width * 0.18)
                             }
                             HStack(spacing: 5) {
                                 //left
                                 Button(action: { scene.movePlayer(dx: -scene.moveStep, dy: 0) }) {
                                     Image("button2")
                                         .resizable()
-                                        .frame(width: g.size.width * 0.26, height: g.size.width * 0.2)
+                                        .frame(width: g.size.width * 0.23, height: g.size.width * 0.18)
                                         .rotationEffect(.degrees(180))
 
                                 }
@@ -86,14 +86,14 @@ struct MazeView: View {
                                 Button(action: { scene.movePlayer(dx: 0, dy: -scene.moveStep) }) {
                                     Image("button1")
                                         .resizable()
-                                        .frame(width: g.size.width * 0.26, height: g.size.width * 0.2)
+                                        .frame(width: g.size.width * 0.23, height: g.size.width * 0.18)
                                         .rotationEffect(.degrees(180))
                                 }
                                 // right
                                 Button(action: { scene.movePlayer(dx: scene.moveStep, dy: 0) }) {
                                     Image("button2")
                                         .resizable()
-                                        .frame(width: g.size.width * 0.26, height: g.size.width * 0.2)
+                                        .frame(width: g.size.width * 0.23, height: g.size.width * 0.18)
                                 }
                             }
                         }
@@ -101,13 +101,13 @@ struct MazeView: View {
 
                     }
 //                    .padding(.bottom)
-                    .frame(width: g.size.width, height: g.size.height * 0.9)
 
                     
                 }
-                .frame(width: g.size.width, height: g.size.height)
+                .frame(width: g.size.width, height: g.size.height * 0.9)
 
             }
+            .frame(width: g.size.width, height: g.size.height)
 
             .navigationBarBackButtonHidden()
 

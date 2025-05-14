@@ -23,8 +23,8 @@ class GameData: ObservableObject {
     init() {
         let savedCoins = UserDefaults.standard.integer(forKey: "coins")
         if savedCoins == 0 {
-            self.coins = 5568
-            UserDefaults.standard.set(5568, forKey: "coins")
+            self.coins = 0
+            UserDefaults.standard.set(0, forKey: "coins")
         } else {
             self.coins = savedCoins
         }
