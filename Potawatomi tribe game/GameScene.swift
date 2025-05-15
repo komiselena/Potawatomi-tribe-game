@@ -46,9 +46,7 @@ class GameScene: SKScene {
         let baseSize: CGFloat = 40
         
         // Определяем размер экрана
-        let screenSize = UIScreen.main.bounds.size
-        let screenWidth = min(screenSize.width, screenSize.height)
-        let screenHeight = max(screenSize.width, screenSize.height)
+//        let screenSize = UIScreen.main.bounds.size
         
         // Множитель для iPad
         let iPadMultiplier: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 1.8 : 1.0
